@@ -1,0 +1,14 @@
+---
+const { project } = Astro.props;
+---
+
+<a class="card reveal" href={`/work/${project.slug}`}>
+  <div class="frame">
+    <img src={project.image} alt={project.title} />
+  </div>
+  <div class="card-body">
+    <div class="meta">{project.category} · {project.year}</div>
+    <h3 class="project-title">{project.title}</h3>
+    <p>{project.summary}</p>
+  </div>
+</a>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import RevealScript from "../../components/RevealScript.astro";
+---
+
+<BaseLayout
+  title="Jamestown Area Schools Brand Book — [Her Name]"
+  description="Case study for the Jamestown Area Schools brand book"
+>
+  <Nav />
+
+  <main>
+    <section class="section">
+      <div class="eyebrow">Brand Systems</div>
+      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+        Jamestown Area Schools Brand Book
+      </h1>
+      <p class="lead">
+        A multi-school identity standards project establishing structure,
+        consistency, and a formal brand-book workflow.
+      </p>
+    </section>
+
+    <section class="section feature-grid">
+      <div class="reveal">
+        <div class="meta">Client: Jamestown Area Schools</div>
+        <div class="meta">Role: Design, systems development, brand standards</div>
+        <div class="meta">Scope: Multi-school brand book</div>
+      </div>
+
+      <div class="frame reveal">
+        <img
+          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Jamestown+Case+Study"
+          alt="Jamestown brand book case study placeholder"
+        />
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="reveal">
+        <h2 class="project-title">Overview</h2>
+        <p class="lead">
+          This project focuses on building a comprehensive standards document
+          across multiple schools while also creating a repeatable internal
+          process for future brand-book work.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <RevealScript />
+</BaseLayout>
