@@ -1,0 +1,276 @@
+---
+export interface CarouselImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  images: CarouselImage[];
+  id?: string;
+  mode?: "full" | "lightboxOnly";
+}
+
+const {
+  images = [],
+  id = `carousel-${Math.random().toString(36).slice(2, 9)}`,
+  mode = "full"
+} = Astro.props as Props;
+
+const hasImages = images.length > 0;
+const firstImage = images[0];
+---
+
+{hasImages && (
+  <div class="image-carousel" data-carousel={id} data-mode={mode}>
+    {mode === "full" ? (
+      <>
+        <div class="carousel-stage frame">
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous image">
+            ‹
+          </button>
+
+          <button
+            class="carousel-image-button"
+            type="button"
+            aria-label="Open gallery"
+          >
+            <img
+              class="carousel-main-image"
+              src={firstImage.src}
+              alt={firstImage.alt}
+              data-carousel-main-image
+            />
+          </button>
+
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next image">
+            ›
+          </button>
+        </div>
+
+        <div class="carousel-meta">
+          <div class="carousel-count" data-carousel-count>1 / {images.length}</div>
+          <div class="carousel-caption" data-carousel-caption>
+            {firstImage.caption ?? ""}
+          </div>
+        </div>
+
+        {images.length > 1 && (
+          <div class="carousel-thumbs" role="tablist" aria-label="Gallery thumbnails">
+            {images.map((image, index) => (
+              <button
+                class={`carousel-thumb ${index === 0 ? "is-active" : ""}`}
+                type="button"
+                data-carousel-thumb
+                data-index={index}
+                aria-label={`View image ${index + 1}`}
+                aria-selected={index === 0 ? "true" : "false"}
+              >
+                <img src={image.src} alt={image.alt} />
+              </button>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <div class="carousel-preview frame">
+        <button
+          class="carousel-image-button carousel-image-button--preview"
+          type="button"
+          aria-label="Open gallery"
+        >
+          <img
+            class="carousel-main-image carousel-main-image--preview"
+            src={firstImage.src}
+            alt={firstImage.alt}
+            data-carousel-main-image
+          />
+        </button>
+      </div>
+    )}
+
+    <div class="carousel-lightbox" data-carousel-lightbox hidden>
+      <button class="carousel-lightbox-close" type="button" aria-label="Close gallery">
+        ×
+      </button>
+
+      <div class="carousel-lightbox-shell">
+        <button class="carousel-lightbox-arrow carousel-lightbox-arrow--prev" type="button" aria-label="Previous image">
+          ‹
+        </button>
+
+        <div class="carousel-lightbox-content">
+          <div class="carousel-lightbox-image-wrap">
+            <img
+              class="carousel-lightbox-image"
+              src={firstImage.src}
+              alt={firstImage.alt}
+              data-carousel-lightbox-image
+            />
+          </div>
+          <div class="carousel-lightbox-caption" data-carousel-lightbox-caption>
+            {firstImage.caption ?? ""}
+          </div>
+        </div>
+
+        <button class="carousel-lightbox-arrow carousel-lightbox-arrow--next" type="button" aria-label="Next image">
+          ›
+        </button>
+      </div>
+    </div>
+
+    <script
+      type="application/json"
+      data-carousel-images
+      set:html={JSON.stringify(images)}
+    />
+  </div>
+)}
+
+<script>
+  const setupCarousels = () => {
+    const carousels = document.querySelectorAll("[data-carousel]");
+
+    carousels.forEach((carousel) => {
+      if (carousel.dataset.initialized === "true") return;
+      carousel.dataset.initialized = "true";
+
+      const imagesScript = carousel.querySelector("[data-carousel-images]");
+      if (!imagesScript) return;
+
+      let images = [];
+      try {
+        images = JSON.parse(imagesScript.textContent || "[]");
+      } catch {
+        images = [];
+      }
+
+      if (!Array.isArray(images) || images.length === 0) return;
+
+      let currentIndex = 0;
+
+      const mainImage = carousel.querySelector("[data-carousel-main-image]");
+      const count = carousel.querySelector("[data-carousel-count]");
+      const caption = carousel.querySelector("[data-carousel-caption]");
+      const thumbs = carousel.querySelectorAll("[data-carousel-thumb]");
+      const prevButton = carousel.querySelector(".carousel-arrow--prev");
+      const nextButton = carousel.querySelector(".carousel-arrow--next");
+      const openButton = carousel.querySelector(".carousel-image-button");
+
+      const lightbox = carousel.querySelector("[data-carousel-lightbox]");
+      const lightboxImage = carousel.querySelector("[data-carousel-lightbox-image]");
+      const lightboxCaption = carousel.querySelector("[data-carousel-lightbox-caption]");
+      const lightboxClose = carousel.querySelector(".carousel-lightbox-close");
+      const lightboxPrev = carousel.querySelector(".carousel-lightbox-arrow--prev");
+      const lightboxNext = carousel.querySelector(".carousel-lightbox-arrow--next");
+
+      const fadeSwap = (imgEl, nextSrc, nextAlt) => {
+  if (!imgEl) return;
+
+  imgEl.classList.add("is-fading");
+
+  window.setTimeout(() => {
+    imgEl.src = nextSrc;
+    imgEl.alt = nextAlt;
+
+    const clearFade = () => {
+      imgEl.classList.remove("is-fading");
+      imgEl.removeEventListener("load", clearFade);
+    };
+
+    imgEl.addEventListener("load", clearFade, { once: true });
+
+    // fallback in case image is cached and load timing is inconsistent
+    window.setTimeout(() => {
+      imgEl.classList.remove("is-fading");
+    }, 120);
+  }, 120);
+};
+
+const update = () => {
+  const current = images[currentIndex];
+  if (!current) return;
+
+  fadeSwap(mainImage, current.src, current.alt);
+  fadeSwap(lightboxImage, current.src, current.alt);
+
+  if (count) {
+    count.textContent = `${currentIndex + 1} / ${images.length}`;
+  }
+
+  if (caption) {
+    caption.textContent = current.caption || "";
+  }
+
+  if (lightboxCaption) {
+    lightboxCaption.textContent = current.caption || "";
+  }
+
+  thumbs.forEach((thumb, index) => {
+    const active = index === currentIndex;
+    thumb.classList.toggle("is-active", active);
+    thumb.setAttribute("aria-selected", active ? "true" : "false");
+  });
+};
+
+      const goTo = (index) => {
+        currentIndex = (index + images.length) % images.length;
+        update();
+      };
+
+      const openLightbox = () => {
+        if (!lightbox) return;
+        lightbox.hidden = false;
+
+        window.requestAnimationFrame(() => {
+            lightbox.classList.add("is-open");
+        });
+
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeLightbox = () => {
+        if (!lightbox) return;
+
+        lightbox.classList.remove("is-open");
+
+        window.setTimeout(() => {
+            lightbox.hidden = true;
+        }, 300);
+
+  document.body.style.overflow = "";
+};
+
+      prevButton?.addEventListener("click", () => goTo(currentIndex - 1));
+      nextButton?.addEventListener("click", () => goTo(currentIndex + 1));
+      lightboxPrev?.addEventListener("click", () => goTo(currentIndex - 1));
+      lightboxNext?.addEventListener("click", () => goTo(currentIndex + 1));
+      openButton?.addEventListener("click", openLightbox);
+      lightboxClose?.addEventListener("click", closeLightbox);
+
+      thumbs.forEach((thumb, index) => {
+        thumb.addEventListener("click", () => goTo(index));
+      });
+
+      lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (!lightbox || lightbox.hidden) return;
+
+        if (event.key === "Escape") closeLightbox();
+        if (event.key === "ArrowLeft") goTo(currentIndex - 1);
+        if (event.key === "ArrowRight") goTo(currentIndex + 1);
+      });
+
+      update();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupCarousels);
+  } else {
+    setupCarousels();
+  }
+</script>
