@@ -16,9 +16,30 @@
     items.forEach((item) => observer.observe(item));
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initReveal);
-  } else {
+  const initScrollProgress = () => {
+    const progressBar = document.querySelector("[data-scroll-progress]");
+    if (!progressBar) return;
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = `${Math.min(progress, 100)}%`;
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+  };
+
+  const initPageEffects = () => {
     initReveal();
+    initScrollProgress();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPageEffects);
+  } else {
+    initPageEffects();
   }
 </script>

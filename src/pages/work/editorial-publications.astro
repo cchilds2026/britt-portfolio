@@ -3,6 +3,61 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+
+const newsletterImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletter+Layout+1",
+    alt: "Newsletter layout placeholder",
+    caption: "Newsletter layouts designed to organize district updates and school communication with clear hierarchy and readability."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletter+Layout+2",
+    alt: "Newsletter spread placeholder",
+    caption: "Editorial structure built to support readability, pacing, and institutional clarity across recurring communications."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletter+Layout+3",
+    alt: "Newsletter detail placeholder",
+    caption: "Layouts designed to feel organized, polished, and practical for school-facing audiences."
+  }
+];
+
+const calendarImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Calendar+and+Agenda+1",
+    alt: "Calendar and agenda placeholder",
+    caption: "Calendars and agendas built for repeated use, with emphasis on usability, navigation, and durable visual systems."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Calendar+and+Agenda+2",
+    alt: "Agenda spread placeholder",
+    caption: "Structured page systems designed to support consistency across recurring institutional materials."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Calendar+and+Agenda+3",
+    alt: "Calendar detail placeholder",
+    caption: "Publication design balancing function, readability, and a cohesive school-facing presentation."
+  }
+];
+
+const graduationImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Graduation+Program+1",
+    alt: "Graduation program placeholder",
+    caption: "Graduation programs designed as formal event materials aligned with school identity and institutional tone."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Graduation+Program+2",
+    alt: "Graduation spread placeholder",
+    caption: "Ceremonial print materials designed to feel organized, commemorative, and visually refined."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Graduation+Program+3",
+    alt: "Graduation detail placeholder",
+    caption: "Program layouts structured for clarity while preserving formality and institutional character."
+  }
+];
 ---
 
 <BaseLayout
@@ -68,13 +123,8 @@ import RevealScript from "../../components/RevealScript.astro";
     <section class="section">
       <div class="eyebrow">Selected Materials</div>
       <div class="grid-3">
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletter+Layouts"
-              alt="Newsletter layout placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={newsletterImages} id="editorial-newsletters-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Editorial Layout</div>
             <h3 class="project-title">Newsletters</h3>
@@ -83,15 +133,10 @@ import RevealScript from "../../components/RevealScript.astro";
               a format that feels readable, structured, and visually coherent.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Calendars+and+Agendas"
-              alt="Calendars and agendas placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={calendarImages} id="editorial-calendars-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Institutional Materials</div>
             <h3 class="project-title">Calendars & Agendas</h3>
@@ -100,15 +145,10 @@ import RevealScript from "../../components/RevealScript.astro";
               consistency, and durable visual systems.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Graduation+Programs"
-              alt="Graduation program placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={graduationImages} id="editorial-graduation-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Ceremonial Print Design</div>
             <h3 class="project-title">Graduation Programs</h3>
@@ -117,7 +157,7 @@ import RevealScript from "../../components/RevealScript.astro";
               and visually aligned with school identity.
             </p>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -141,6 +181,28 @@ import RevealScript from "../../components/RevealScript.astro";
           mindset that prioritizes legibility, hierarchy, and thoughtful pacing
           across multi-page formats.
         </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 3.5rem;">
+      <div class="eyebrow">Continue Exploring</div>
+      <div class="case-nav-wrap reveal">
+        <div class="case-nav">
+          <a href="/work/jamestown-brand-book">
+            <span class="label">Previous Project</span>
+            <span class="title">Jamestown Area Schools Brand Book</span>
+          </a>
+
+          <a href="/work">
+            <span class="label">All Work</span>
+            <span class="title">Back to All Work</span>
+          </a>
+
+          <a href="/work/large-format-signage">
+            <span class="label">Next Project</span>
+            <span class="title">Large-Format Graphics</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>

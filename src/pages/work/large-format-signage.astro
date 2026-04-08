@@ -3,6 +3,61 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+
+const bannerImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Banner+Design+1",
+    alt: "Banner design placeholder",
+    caption: "Event and promotional banner graphics designed for strong readability, visual presence, and brand consistency."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Banner+Design+2",
+    alt: "Banner variation placeholder",
+    caption: "Large-scale promotional materials built to succeed in public-facing school environments."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Banner+Design+3",
+    alt: "Banner detail placeholder",
+    caption: "Work designed to remain clear, legible, and visually effective at scale."
+  }
+];
+
+const vinylWrapImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Vinyl+Wrap+1",
+    alt: "Vinyl wrap placeholder",
+    caption: "Environmental branding applied to surfaces with attention to scale, messaging, and installation impact."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Vinyl+Wrap+2",
+    alt: "Vinyl wrap application placeholder",
+    caption: "Identity translated into physical space through large-scale graphic applications."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Vinyl+Wrap+3",
+    alt: "Vinyl wrap detail placeholder",
+    caption: "Production-aware large-format work shaped by environment, material constraints, and visibility goals."
+  }
+];
+
+const signageImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Signage+1",
+    alt: "School signage placeholder",
+    caption: "Signage designed to support visibility, communication, and branded presence across institutional environments."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Signage+2",
+    alt: "Wayfinding signage placeholder",
+    caption: "School-facing graphics built for readability, function, and consistency in real-world conditions."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Signage+3",
+    alt: "Signage detail placeholder",
+    caption: "Large-format communication pieces designed for both clarity and visual impact."
+  }
+];
 ---
 
 <BaseLayout
@@ -65,13 +120,8 @@ import RevealScript from "../../components/RevealScript.astro";
     <section class="section">
       <div class="eyebrow">Selected Materials</div>
       <div class="grid-3">
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Banners"
-              alt="Banner design placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={bannerImages} id="largeformat-banners-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Promotional Graphics</div>
             <h3 class="project-title">Banners</h3>
@@ -80,15 +130,10 @@ import RevealScript from "../../components/RevealScript.astro";
               visual presence, and brand consistency in public settings.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Vinyl+Wraps"
-              alt="Vinyl wrap placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={vinylWrapImages} id="largeformat-wraps-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Environmental Branding</div>
             <h3 class="project-title">Vinyl Wraps</h3>
@@ -98,15 +143,10 @@ import RevealScript from "../../components/RevealScript.astro";
               accuracy.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Signage"
-              alt="School signage placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={signageImages} id="largeformat-signage-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Wayfinding & Visibility</div>
             <h3 class="project-title">Signage</h3>
@@ -115,7 +155,7 @@ import RevealScript from "../../components/RevealScript.astro";
               branded presence across institutional environments.
             </p>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -139,6 +179,28 @@ import RevealScript from "../../components/RevealScript.astro";
           create work that is visually strong, clearly legible, and dependable
           from concept through final installation.
         </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 3.5rem;">
+      <div class="eyebrow">Continue Exploring</div>
+      <div class="case-nav-wrap reveal">
+        <div class="case-nav">
+          <a href="/work/editorial-publications">
+            <span class="label">Previous Project</span>
+            <span class="title">Editorial & Publication Design</span>
+          </a>
+
+          <a href="/work">
+            <span class="label">All Work</span>
+            <span class="title">Back to All Work</span>
+          </a>
+
+          <a href="/work/jamestown-brand-book">
+            <span class="label">Next Project</span>
+            <span class="title">Jamestown Area Schools Brand Book</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>

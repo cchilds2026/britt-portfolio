@@ -3,21 +3,125 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import RevealScript from "../components/RevealScript.astro";
+import ImageCarousel from "../components/ImageCarousel.astro";
+
+const awards = [
+  {
+    title: "[Award Title 1]",
+    year: "[Year]",
+    agency: "[Awarding Agency]",
+    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+1",
+    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+1",
+    url: "[AWARD_PAGE_URL_1]",
+    previewImages: [
+      {
+        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+1",
+        alt: "Preview of awarded design piece 1",
+        caption: "This piece was recognized for its strong visual communication, thoughtful hierarchy, and polished execution within an educational design context."
+      }
+    ]
+  },
+  {
+    title: "[Award Title 2]",
+    year: "[Year]",
+    agency: "[Awarding Agency]",
+    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+2",
+    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+2",
+    url: "[AWARD_PAGE_URL_2]",
+    previewImages: [
+      {
+        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+2",
+        alt: "Preview of awarded design piece 2",
+        caption: "This design was recognized for combining clarity, brand consistency, and effective communication in a format built for real-world institutional use."
+      }
+    ]
+  },
+  {
+    title: "[Award Title 3]",
+    year: "[Year]",
+    agency: "[Awarding Agency]",
+    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+3",
+    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+3",
+    url: "[AWARD_PAGE_URL_3]",
+    previewImages: [
+      {
+        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+3",
+        alt: "Preview of awarded design piece 3",
+        caption: "The work was recognized for its balance of visual refinement, readability, and strong alignment with its intended audience and setting."
+      }
+    ]
+  },
+  {
+    title: "[Award Title 4]",
+    year: "[Year]",
+    agency: "[Awarding Agency]",
+    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+4",
+    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+4",
+    url: "[AWARD_PAGE_URL_4]",
+    previewImages: [
+      {
+        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+4",
+        alt: "Preview of awarded design piece 4",
+        caption: "This piece was awarded for its thoughtful composition, effective messaging, and high level of craft across both design and production details."
+      }
+    ]
+  }
+];
 ---
 
-<BaseLayout title="About — Brittany Childs" description="About the designer">
+<BaseLayout
+  title="About — Brittany Childs"
+  description="About Brittany Childs."
+>
   <Nav />
 
   <main>
     <section class="section about-grid">
-      <div class="reveal">
+      <div class="reveal about-copy">
         <div class="eyebrow">About</div>
-        <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">Design with clarity, system, and purpose.</h1>
+        <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+          About Me
+        </h1>
+
         <p class="lead">
-          Brittany Childs is a graphic designer creating branded communications for
-          multiple school districts through CABOCES. Her work includes brand
-          systems, publication design, large-format graphics, and institutional
-          materials designed for clear communication across diverse audiences.
+          I’m a graphic designer with 5 years of experience creating branded
+          communications for multiple school districts through CABOCES. My work
+          spans brand systems, publication design, large-format graphics, and
+          institutional materials built for clarity, consistency, and effective
+          communication across diverse audiences.
+        </p>
+
+        <p>
+          I work across complex stakeholder environments, balancing strong visual
+          design with production realities, approval workflows, and long-term
+          usability. My experience includes recurring publications,
+          environmental graphics, and large-scale standards work such as the
+          Jamestown Area Schools brand book, where I am helping define both the
+          visual system and the process for future brand-book development.
+        </p>
+
+        <p>
+          I’m especially interested in design that supports clear communication
+          and inclusive use. That includes thoughtful attention to hierarchy,
+          readability, and accessibility-minded decisions that help materials
+          work well for broad audiences in educational settings.
+        </p>
+
+        <p>
+          My approach combines editorial discipline, systems thinking, and
+          production-aware execution. I’ve also been recognized with multiple
+          design awards, and I bring that same attention to craft and detail to
+          every project, whether it is a brand standards system, a publication,
+          or a large-format environmental piece.
+        </p>
+
+        <p>
+          I’m always interested in opportunities involving educational
+          communications, institutional branding, publication design, and
+          large-format work. You can reach me at
+          <a href="mailto:brittanyalexcampbell92@yahoo.com">
+            brittanyalexcampbell92@yahoo.com
+          </a>.
         </p>
       </div>
 
@@ -28,6 +132,57 @@ import RevealScript from "../components/RevealScript.astro";
         />
       </div>
     </section>
+
+    <section class="section awards-section">
+  <div class="eyebrow">Recognition</div>
+  <h2 class="project-title" style="font-size: 2rem; margin-bottom: 1.5rem;">
+    Selected Awards
+  </h2>
+
+  <div class="awards-grid awards-grid--four">
+    {awards.map((award, index) => (
+      <article class="award-card reveal">
+        <div class="award-header frame">
+          <img
+            class="award-logo"
+            src={award.logo}
+            alt={`${award.agency} logo`}
+          />
+        </div>
+
+        <div class="award-preview-wrap">
+          <div class="award-preview">
+            <ImageCarousel
+              images={award.previewImages}
+              id={`award-preview-${index}`}
+              mode="lightboxOnly"
+            />
+          </div>
+
+          <div class="award-ribbon-badge frame">
+            <img
+              class="award-ribbon"
+              src={award.ribbon}
+              alt={`${award.year} ribbon`}
+            />
+          </div>
+        </div>
+
+        <div class="award-copy">
+          <h3 class="project-title">{award.title}</h3>
+          <a
+            class="award-link"
+            href={award.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Award Listing
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
   </main>
 
   <Footer />

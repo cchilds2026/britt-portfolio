@@ -1,7 +1,12 @@
 ---
 import "../styles/global.css";
 
-const { title = "Portfolio", description = "Designer portfolio" } = Astro.props;
+const {
+  title = "Brittany Childs — Graphic Designer",
+  description = "Graphic designer specializing in brand systems, educational communications, publication design, and large-format visual materials.",
+  image = "/social-preview.jpg",
+  url = "https://britt-portfolio.cchilds.workers.dev/"
+} = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -10,6 +15,20 @@ const { title = "Portfolio", description = "Designer portfolio" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
