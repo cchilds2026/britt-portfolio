@@ -3,6 +3,61 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+
+const coverImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Brand+Book+Cover+1",
+    alt: "Brand book cover placeholder",
+    caption: "Cover and opening presentation materials designed to establish the tone and structure of the Jamestown Area Schools brand book."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Brand+Book+Cover+2",
+    alt: "Brand book cover variation placeholder",
+    caption: "Brand book cover exploration showing the system’s institutional tone and visual consistency."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Brand+Book+Cover+3",
+    alt: "Brand book cover detail placeholder",
+    caption: "A structured opening section designed to feel clear, polished, and durable for long-term use."
+  }
+];
+
+const standardsImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Standards+Spread+1",
+    alt: "Standards spread placeholder",
+    caption: "Interior standards pages organized to make brand guidance readable, navigable, and practical in use."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Standards+Spread+2",
+    alt: "Standards system placeholder",
+    caption: "System pages built around hierarchy, consistency, and a structure that supports real decision-making."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Standards+Spread+3",
+    alt: "Standards detail placeholder",
+    caption: "Guidelines developed to feel intuitive and scalable across multiple schools and future communications."
+  }
+];
+
+const applicationImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Application+Examples+1",
+    alt: "Application example placeholder",
+    caption: "Application examples demonstrating how the brand standards system supports future communication consistency."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Application+Examples+2",
+    alt: "Brand application variation placeholder",
+    caption: "Examples showing how the system can extend across school-facing and district-facing materials."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Application+Examples+3",
+    alt: "Brand application detail placeholder",
+    caption: "Structured applications built to reinforce identity and maintain continuity over time."
+  }
+];
 ---
 
 <BaseLayout
@@ -12,7 +67,7 @@ import RevealScript from "../../components/RevealScript.astro";
   <Nav />
 
   <main>
-    <section class="section">
+    <section class="section editorial-page-intro">
       <div class="eyebrow">Brand Systems</div>
       <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
         Jamestown Area Schools Brand Book
@@ -24,174 +79,44 @@ import RevealScript from "../../components/RevealScript.astro";
       </p>
     </section>
 
-    <section class="section feature-grid">
-      <div class="reveal">
-        <div class="meta">Client: Jamestown Area Schools</div>
-        <div class="meta">Role: Graphic Design, Brand Systems Development</div>
-        <div class="meta">Scope: Multi-school brand standards book</div>
-        <div class="meta">Context: Educational communications / institutional identity</div>
-      </div>
-
+    <section class="section editorial-hero-grid">
       <div class="frame reveal">
         <img
           src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Jamestown+Brand+Book+Hero"
-          alt="Jamestown Area Schools brand book placeholder"
-        />
-      </div>
-    </section>
-
-    <section class="section about-grid">
-      <div class="reveal">
-        <div class="eyebrow">Overview</div>
-        <h2 class="project-title">Building structure where none previously existed.</h2>
-        <p>
-          This project began as more than a design assignment. It required the
-          development of an organized standards system for multiple schools,
-          along with a clear internal process for how CABOCES approaches
-          large-scale brand-book work moving forward. Because no established
-          workflow existed, the project demanded both design execution and
-          systems thinking from the ground up.
-        </p>
-      </div>
-
-      <div class="reveal">
-        <div class="eyebrow">Purpose</div>
-        <h2 class="project-title">Creating consistency across a broader school identity system.</h2>
-        <p>
-          Jamestown Area Schools needed a framework that could support multiple
-          schools and identities while still feeling coherent as part of a
-          larger district environment. The goal was to create standards that
-          could guide future communications, reinforce visual consistency, and
-          provide a usable reference point for long-term stewardship.
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="eyebrow">The Challenge</div>
-      <div class="process-strip reveal">
-        <div>
-          <strong>Multiple Schools</strong>
-          <p>
-            The system needed to account for multiple identities and contexts
-            while still maintaining cohesion across the broader brand structure.
-          </p>
-        </div>
-        <div>
-          <strong>No Existing Process</strong>
-          <p>
-            CABOCES had not previously developed a formal brand book at this
-            scale, so the workflow itself had to be built during the project.
-          </p>
-        </div>
-        <div>
-          <strong>Long-Term Usefulness</strong>
-          <p>
-            The standards needed to be practical, clear, and durable enough to
-            support future communication work beyond the initial deliverable.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section feature-grid">
-      <div class="frame reveal">
-        <img
-          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Brand+System+Layouts"
-          alt="Brand system layout placeholder"
+          alt="Jamestown Area Schools brand book overview"
         />
       </div>
 
-      <div class="reveal">
-        <div class="eyebrow">Approach</div>
-        <h2 class="project-title" style="font-size: 2rem;">
-          Brand standards as both a visual and organizational system.
-        </h2>
-        <p>
-          The work focused on building a standards document that could operate
-          as a true system rather than simply a visual reference. That meant
-          thinking carefully about structure, hierarchy, consistency, and how
-          the material would actually be used over time. The process balanced
-          identity clarity with flexibility, ensuring the final book could
-          support real-world communication needs across different schools and
-          stakeholders.
-        </p>
+      <div class="editorial-hero-copy reveal">
+        <div class="editorial-hero-main">
+          <h2 class="project-title" style="font-size: 2rem; margin-top: 0;">
+            A systems-driven brand standards project built from the ground up.
+          </h2>
+
+          <p>
+            This project began as more than a design assignment. It required the
+            development of an organized standards system for multiple schools,
+            along with a clear internal process for how CABOCES approaches
+            large-scale brand-book work moving forward. Because no established
+            workflow existed, the project demanded both design execution and
+            systems thinking from the ground up.
+          </p>
+        </div>
+
+        <div class="editorial-hero-meta">
+          <div class="meta">Client: Jamestown Area Schools</div>
+          <div class="meta">Role: Graphic Design, Brand Systems Development</div>
+          <div class="meta">Scope: Multi-school brand standards book</div>
+          <div class="meta">Context: Educational communications / institutional identity</div>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="eyebrow">Key Considerations</div>
+    <section class="section editorial-materials-section">
+      <div class="eyebrow">Selected Materials</div>
       <div class="grid-3">
-        <div class="card reveal">
-          <div class="card-body">
-            <div class="meta">Systems Thinking</div>
-            <h3 class="project-title">Organized Structure</h3>
-            <p>
-              The brand book needed to feel intuitive and easy to navigate, with
-              a structure that made standards clear and accessible for future use.
-            </p>
-          </div>
-        </div>
-
-        <div class="card reveal">
-          <div class="card-body">
-            <div class="meta">Institutional Identity</div>
-            <h3 class="project-title">Consistency Across Schools</h3>
-            <p>
-              The project required balancing individual school character with a
-              broader sense of coherence across the district system.
-            </p>
-          </div>
-        </div>
-
-        <div class="card reveal">
-          <div class="card-body">
-            <div class="meta">Practical Application</div>
-            <h3 class="project-title">Usable Standards</h3>
-            <p>
-              The final deliverable was designed to support future decision-making,
-              not just serve as a presentation artifact.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section about-grid">
-      <div class="reveal">
-        <div class="eyebrow">Role</div>
-        <h2 class="project-title">Leading both the design work and the process design.</h2>
-        <p>
-          In addition to shaping the visual system and standards document, this
-          project involved defining how the work itself would be organized and
-          executed. That included building a process where no prior model
-          existed, creating a foundation CABOCES can apply to future branding
-          initiatives.
-        </p>
-      </div>
-
-      <div class="reveal">
-        <div class="eyebrow">Impact</div>
-        <h2 class="project-title">A flagship systems project within an educational context.</h2>
-        <p>
-          The Jamestown Area Schools brand book represents a meaningful step
-          beyond one-off design deliverables. It reflects a more strategic mode
-          of communication design—one focused on stewardship, scalability, and
-          the long-term value of consistent institutional identity.
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="eyebrow">Selected Deliverables</div>
-      <div class="grid-3">
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Cover+Concept"
-              alt="Brand book cover placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={coverImages} id="jamestown-cover-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Core Deliverable</div>
             <h3 class="project-title">Brand Book Framework</h3>
@@ -200,15 +125,10 @@ import RevealScript from "../../components/RevealScript.astro";
               future communications across a multi-school environment.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=System+Pages"
-              alt="Brand standards spread placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={standardsImages} id="jamestown-standards-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Standards Development</div>
             <h3 class="project-title">System Guidelines</h3>
@@ -217,15 +137,10 @@ import RevealScript from "../../components/RevealScript.astro";
               clear, readable, and useful in practice.
             </p>
           </div>
-        </div>
+        </article>
 
-        <div class="card reveal">
-          <div class="frame">
-            <img
-              src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Application+Examples"
-              alt="Brand application placeholder"
-            />
-          </div>
+        <article class="card reveal">
+          <ImageCarousel images={applicationImages} id="jamestown-applications-preview" mode="lightboxOnly" />
           <div class="card-body">
             <div class="meta">Future Application</div>
             <h3 class="project-title">Communication Alignment</h3>
@@ -234,34 +149,40 @@ import RevealScript from "../../components/RevealScript.astro";
               district and school-facing materials.
             </p>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section editorial-summary-section">
+      <div class="editorial-summary reveal">
+        <div>
+          <div class="eyebrow">Approach</div>
+          <h2 class="project-title" style="font-size: 1.9rem;">
+            Built for structure, stewardship, and long-term institutional use.
+          </h2>
+        </div>
+
+        <div>
+          <p>
+            Jamestown Area Schools needed a framework that could support
+            multiple schools and identities while still feeling coherent as part
+            of a larger district environment. The work focused on building a
+            standards document that could operate as a true system rather than
+            simply a visual reference.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            The result is a flagship systems project that reflects a more
+            strategic mode of communication design—one focused on consistency,
+            clarity, scalability, and long-term value.
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="section feature-grid">
-      <div class="reveal">
-        <div class="eyebrow">Why It Matters</div>
-        <h2 class="project-title" style="font-size: 2rem;">
-          A design project that demonstrates strategy, stewardship, and scale.
-        </h2>
-        <p>
-          This case study highlights more than layout or visual polish. It shows
-          the ability to think systemically, work within institutional contexts,
-          and create structures that help organizations communicate more
-          consistently over time. It is a strong example of design functioning
-          as both a visual discipline and an operational one.
-        </p>
-      </div>
-
-      <div class="frame reveal">
-        <img
-          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Final+Presentation+Spread"
-          alt="Final brand book presentation placeholder"
-        />
-      </div>
-    </section>
-
-    <section class="section" style="padding-top: 3.5rem;">
+    <section class="section" style="padding-top: 3rem;">
       <div class="eyebrow">Continue Exploring</div>
       <div class="case-nav-wrap reveal">
         <div class="case-nav">

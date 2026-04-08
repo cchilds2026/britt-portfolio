@@ -7,19 +7,29 @@ import ProjectCard from "../../components/ProjectCard.astro";
 import { projects } from "../../data/projects";
 ---
 
-<BaseLayout title="Work — Brittany Childs" description="Selected portfolio work">
+<BaseLayout
+  title="Work — Brittany Childs"
+  description="Selected projects in brand systems, editorial publications, and large-format graphics."
+>
   <Nav />
 
   <main>
-    <section class="section">
+    <section class="section work-page-intro">
       <div class="eyebrow">Work</div>
-      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">Selected Projects</h1>
-      <p class="lead">Brand systems, educational communications, editorial work, and large-format design.</p>
+      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+        Selected Projects
+      </h1>
+      <p class="lead">
+        A selection of brand systems, publication design, and large-format work
+        created for educational communications across multiple school districts.
+      </p>
     </section>
 
-    <section class="section">
+    <section class="section work-grid-section">
       <div class="grid-3">
-        {projects.map((project) => <ProjectCard project={project} />)}
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
       </div>
     </section>
   </main>

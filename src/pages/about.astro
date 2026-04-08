@@ -76,13 +76,22 @@ const awards = [
   <Nav />
 
   <main>
-    <section class="section about-grid">
-      <div class="reveal about-copy">
+    <section class="section about-page">
+      <div class="about-intro reveal">
+        <div class="about-portrait about-portrait--circle frame">
+          <img
+            src="/AboutProfile.jpeg"
+            alt="Portrait of Brittany Childs"
+          />
+        </div>
+
         <div class="eyebrow">About</div>
         <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
           About Me
         </h1>
+      </div>
 
+      <div class="about-body reveal">
         <p class="lead">
           I’m a graphic designer with 5 years of experience creating branded
           communications for multiple school districts through CABOCES. My work
@@ -124,65 +133,58 @@ const awards = [
           </a>.
         </p>
       </div>
-
-      <div class="frame reveal">
-        <img
-          src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Portrait+or+Studio+Image"
-          alt="Portrait placeholder"
-        />
-      </div>
     </section>
 
     <section class="section awards-section">
-  <div class="eyebrow">Recognition</div>
-  <h2 class="project-title" style="font-size: 2rem; margin-bottom: 1.5rem;">
-    Selected Awards
-  </h2>
+      <div class="eyebrow">Recognition</div>
+      <h2 class="project-title" style="font-size: 2rem; margin-bottom: 1.5rem;">
+        Selected Awards
+      </h2>
 
-  <div class="awards-grid awards-grid--four">
-    {awards.map((award, index) => (
-      <article class="award-card reveal">
-        <div class="award-header frame">
-          <img
-            class="award-logo"
-            src={award.logo}
-            alt={`${award.agency} logo`}
-          />
-        </div>
+      <div class="awards-grid awards-grid--four">
+        {awards.map((award, index) => (
+          <article class="award-card reveal">
+            <div class="award-header frame">
+              <img
+                class="award-logo"
+                src={award.logo}
+                alt={`${award.agency} logo`}
+              />
+            </div>
 
-        <div class="award-preview-wrap">
-          <div class="award-preview">
-            <ImageCarousel
-              images={award.previewImages}
-              id={`award-preview-${index}`}
-              mode="lightboxOnly"
-            />
-          </div>
+            <div class="award-preview-wrap">
+              <div class="award-preview">
+                <ImageCarousel
+                  images={award.previewImages}
+                  id={`award-preview-${index}`}
+                  mode="lightboxOnly"
+                />
+              </div>
 
-          <div class="award-ribbon-badge frame">
-            <img
-              class="award-ribbon"
-              src={award.ribbon}
-              alt={`${award.year} ribbon`}
-            />
-          </div>
-        </div>
+              <div class="award-ribbon-badge frame">
+                <img
+                  class="award-ribbon"
+                  src={award.ribbon}
+                  alt={`${award.year} ribbon`}
+                />
+              </div>
+            </div>
 
-        <div class="award-copy">
-          <h3 class="project-title">{award.title}</h3>
-          <a
-            class="award-link"
-            href={award.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Award Listing
-          </a>
-        </div>
-      </article>
-    ))}
-  </div>
-</section>
+            <div class="award-copy">
+              <h3 class="project-title">{award.title}</h3>
+              <a
+                class="award-link"
+                href={award.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Award Listing
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   </main>
 
   <Footer />

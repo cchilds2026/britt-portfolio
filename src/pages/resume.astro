@@ -5,11 +5,14 @@ import Footer from "../components/Footer.astro";
 import RevealScript from "../components/RevealScript.astro";
 ---
 
-<BaseLayout title="Resume — Brittany Childs" description="Resume and experience overview for Brittany Childs">
+<BaseLayout
+  title="Resume — Brittany Childs"
+  description="Resume and experience overview for Brittany Childs."
+>
   <Nav />
 
   <main>
-    <section class="section about-grid">
+    <section class="section about-grid resume-layout">
       <div class="reveal about-copy">
         <div class="eyebrow">Resume</div>
         <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
@@ -41,7 +44,7 @@ import RevealScript from "../components/RevealScript.astro";
           </div>
         </div>
 
-        <div class= "button-row">
+        <div class="button-row">
           <a class="button" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
             Download Resume PDF
           </a>
@@ -51,10 +54,10 @@ import RevealScript from "../components/RevealScript.astro";
         </div>
       </div>
 
-      <div class="frame reveal">
+      <div class="resume-preview frame reveal">
         <img
           src="https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Resume+Preview+or+Detail"
-          alt="Brittany Childs Resume Preview"
+          alt="Resume preview placeholder"
         />
       </div>
     </section>

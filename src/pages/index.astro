@@ -67,7 +67,7 @@ const largeFormatPreviewImages = [
   <Nav />
 
   <main>
-    <section class="section hero-grid">
+    <section class="section home-page-intro hero-grid">
       <div class="reveal">
         <div class="eyebrow">Selected Work</div>
         <h1 class="display">Brittany Childs</h1>
@@ -77,7 +77,11 @@ const largeFormatPreviewImages = [
           districts through CABOCES. Her work is grounded in clarity, consistency,
           and thoughtful design for institutional audiences.
         </p>
-        <a class="button" href="/work">View Selected Work</a>
+
+        <div class="button-row">
+          <a class="button" href="/work">View Selected Work</a>
+          <a class="button" href="/resume">Resume</a>
+        </div>
       </div>
 
       <div class="frame reveal">
@@ -88,30 +92,30 @@ const largeFormatPreviewImages = [
       </div>
     </section>
 
-    <section class="section feature-grid">
-      <div class="reveal">
-        <div class="eyebrow">Featured Project</div>
-        <h2 class="project-title" style="font-size: 2rem;">
-          Jamestown Area Schools Brand Book
-        </h2>
-        <p class="lead">
-          A comprehensive multi-school identity standards project developed to
-          strengthen consistency across district communications while also creating
-          CABOCES’ first formal process for brand-book development.
-        </p>
-        <a class="button" href="/work/jamestown-brand-book">View Case Study</a>
-      </div>
-
+    <section class="section home-feature-section feature-grid">
       <div class="frame reveal">
         <img
           src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Brand+Book+Preview"
           alt="Jamestown brand book preview"
         />
       </div>
+
+      <div class="reveal home-feature-copy">
+        <div class="eyebrow">Featured Project</div>
+        <h2 class="project-title" style="font-size: 2rem;">
+          Jamestown Area Schools Brand Book
+        </h2>
+        <p>
+          A comprehensive multi-school identity standards project developed to
+          strengthen consistency across district communications while also creating
+          CABOCES’ first formal process for brand-book development.
+        </p>
+        <a class="button" href="/work/jamestown-brand-book">View Case Study</a>
+      </div>
     </section>
 
-    <section class="section">
-      <div class="eyebrow">Selected Work</div>
+    <section class="section home-projects-section">
+      <div class="eyebrow">Selected Projects</div>
       <div class="grid-3">
         <article class="card reveal">
           <ImageCarousel images={jamestownPreviewImages} id="home-jamestown-preview" mode="lightboxOnly" />
@@ -122,7 +126,6 @@ const largeFormatPreviewImages = [
               A comprehensive multi-school identity system establishing structure,
               consistency, and a new internal workflow for brand standards development.
             </p>
-            <a class="button" href="/work/jamestown-brand-book">View Case Study</a>
           </div>
         </article>
 
@@ -135,7 +138,6 @@ const largeFormatPreviewImages = [
               Newsletters, calendars, agendas, and graduation materials designed
               with emphasis on hierarchy, readability, and institutional consistency.
             </p>
-            <a class="button" href="/work/editorial-publications">View Case Study</a>
           </div>
         </article>
 
@@ -148,13 +150,12 @@ const largeFormatPreviewImages = [
               Banners, signage, and vinyl graphics created for events, visibility,
               and branded school environments.
             </p>
-            <a class="button" href="/work/large-format-signage">View Case Study</a>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section home-process-section">
       <div class="process-strip reveal">
         <div>
           <strong>Multi-District Collaboration</strong>
