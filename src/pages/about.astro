@@ -7,11 +7,11 @@ import ImageCarousel from "../components/ImageCarousel.astro";
 
 const awards = [
   {
-    title: "[Award Title 1]",
-    year: "[Year]",
-    agency: "[Awarding Agency]",
-    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+1",
-    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+1",
+    title: "2022 NSPRA Honorable Mention",
+    year: "2022",
+    agency: "NSPRA",
+    logo: "/NSPRA-Logo.png",
+    ribbon: "/nspra-ribbon.png",
     url: "[AWARD_PAGE_URL_1]",
     previewImages: [
       {
@@ -22,11 +22,11 @@ const awards = [
     ]
   },
   {
-    title: "[Award Title 2]",
-    year: "[Year]",
-    agency: "[Awarding Agency]",
-    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+2",
-    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+2",
+    title: "2023 NSPRA Award for Excellence in Special Purpose Education",
+    year: "2023",
+    agency: "NSPRA",
+    logo: "/NSPRA-Logo.png",
+    ribbon: "/nspra-ribbon.png",
     url: "[AWARD_PAGE_URL_2]",
     previewImages: [
       {
@@ -37,11 +37,11 @@ const awards = [
     ]
   },
   {
-    title: "[Award Title 3]",
-    year: "[Year]",
-    agency: "[Awarding Agency]",
-    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+3",
-    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+3",
+    title: "2023 NYSPRA Award for Excellence in Special Purpose Education",
+    year: "2023",
+    agency: "NYSPRA",
+    logo: "/NYSPRA-Logo.png",
+    ribbon: "/NYSPRA-ribbon.png",
     url: "[AWARD_PAGE_URL_3]",
     previewImages: [
       {
@@ -52,11 +52,11 @@ const awards = [
     ]
   },
   {
-    title: "[Award Title 4]",
-    year: "[Year]",
-    agency: "[Awarding Agency]",
-    logo: "https://placehold.co/220x90/f6f2eb/1f1b18?text=Agency+Logo+4",
-    ribbon: "https://placehold.co/220x70/f6f2eb/1f1b18?text=Year+Ribbon+4",
+    title: "2025 Nomination for NSPRA Award",
+    year: "2025",
+    agency: "NSPRA",
+    logo: "/NSPRA-Logo.png",
+    ribbon: "nspra-ribbon.png",
     url: "[AWARD_PAGE_URL_4]",
     previewImages: [
       {
@@ -144,9 +144,9 @@ const awards = [
       <div class="awards-grid awards-grid--four">
         {awards.map((award, index) => (
           <article class="award-card reveal">
-            <div class="award-header frame">
+            <div class="award-header">
               <img
-                class="award-logo"
+                class={`award-logo award-logo--${index + 1}`}
                 src={award.logo}
                 alt={`${award.agency} logo`}
               />
@@ -161,13 +161,15 @@ const awards = [
                 />
               </div>
 
-              <div class="award-ribbon-badge frame">
-                <img
-                  class="award-ribbon"
-                  src={award.ribbon}
-                  alt={`${award.year} ribbon`}
-                />
-              </div>
+              {award.ribbon && (
+                <div class="award-ribbon-badge">
+                  <img
+                    class="award-ribbon"
+                    src={award.ribbon}
+                    alt={`${award.year} ribbon`}
+                  />
+                </div>
+              )}
             </div>
 
             <div class="award-copy">
