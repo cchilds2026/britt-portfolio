@@ -1,0 +1,234 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import RevealScript from "../../components/RevealScript.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+
+const athleticsImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Athletics+Graphics+1",
+    alt: "Athletics graphics placeholder",
+    caption: "Athletics-focused graphics including decals, score tables, and school-spirit applications."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Athletics+Graphics+2",
+    alt: "Vinyl decal placeholder",
+    caption: "Large-scale athletics graphics designed to reinforce school identity and visibility."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Concession+and+Score+Table",
+    alt: "Concession stand and score table placeholder",
+    caption: "Athletics graphics built for school spirit, function, and environmental presence."
+  }
+];
+
+const signageImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Signage+1",
+    alt: "Building signage placeholder",
+    caption: "Building signage designed to communicate clearly while staying aligned with school branding."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Acrylic+Nameplates",
+    alt: "Acrylic nameplate placeholder",
+    caption: "Acrylic nameplates and environmental signs designed for consistency and visual clarity."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Wayfinding+Signs",
+    alt: "Wayfinding sign placeholder",
+    caption: "Signage systems supporting wayfinding, visibility, and institutional presence."
+  }
+];
+
+const accessibilityImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Accessibility+Signage+1",
+    alt: "Accessibility signage placeholder",
+    caption: "Informational signs designed with readability and accessibility in mind."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Accessibility+Signage+2",
+    alt: "Accessible communication sign placeholder",
+    caption: "Environmental communication pieces built to support broad use within the school building."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Communication+Signage",
+    alt: "Communication signage placeholder",
+    caption: "Signage work shaped by function, branding, and inclusive communication considerations."
+  }
+];
+---
+
+<BaseLayout
+  title="Athletics & Signage — Brittany Childs"
+  description="Athletics graphics, signage systems, acrylic nameplates, and accessibility-minded communication signs."
+>
+  <Nav />
+
+  <main>
+    <section class="section editorial-page-intro">
+      <div class="eyebrow">Environmental Graphics</div>
+      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+        Athletics & Signage
+      </h1>
+      <p class="lead">
+        Environmental graphics and signage created for school spaces, combining
+        athletics identity, building communication, and accessibility-minded use.
+      </p>
+    </section>
+
+    <section class="section editorial-hero-grid">
+      <div class="frame reveal">
+        <img
+          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Athletics+and+Signage"
+          alt="Athletics and signage overview"
+        />
+      </div>
+
+      <div class="editorial-hero-copy reveal">
+        <div class="editorial-hero-main">
+          <h2 class="project-title" style="font-size: 2rem; margin-top: 0;">
+            Environmental graphics built for spirit, clarity, and everyday use.
+          </h2>
+
+          <p>
+            This category includes athletics-focused graphics, school signage,
+            acrylic nameplates, and communication signs designed to work within
+            active educational environments. The work balances visibility,
+            branding, function, and accessibility across a range of scales.
+          </p>
+        </div>
+
+        <div class="editorial-hero-meta">
+          <div class="meta">Client: Multiple school districts through CABOCES</div>
+          <div class="meta">Role: Graphic design, signage design, environmental graphics</div>
+          <div class="meta">Scope: Athletics graphics, signage systems, nameplates, accessible communication signs</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section">
+      <div class="branding-case-grid">
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Section One</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            Athletics Graphics
+          </h2>
+          <p>
+            Athletics work includes wall decals, score tables, concession stand
+            graphics, and other visual applications designed to reinforce school
+            spirit, presence, and branded identity within athletic spaces.
+          </p>
+        </div>
+
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={athleticsImages}
+            id="athletics-graphics-preview"
+            mode="lightboxOnly"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section branding-split-section--second">
+      <div class="branding-case-grid branding-case-grid--reverse">
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={signageImages}
+            id="school-signage-preview"
+            mode="lightboxOnly"
+          />
+        </div>
+
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Section Two</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            School Signage Systems
+          </h2>
+          <p>
+            Building signage and acrylic nameplates support communication across
+            school environments while staying visually aligned with branding.
+            These pieces are designed to feel clear, consistent, and durable in use.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section branding-split-section--second">
+      <div class="branding-case-grid">
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Section Three</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            Accessibility & Communication
+          </h2>
+          <p>
+            Some signage projects focus specifically on communication needs
+            within the building, including signs shaped by accessibility,
+            readability, and the practical realities of moving through school spaces.
+          </p>
+        </div>
+
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={accessibilityImages}
+            id="accessible-signage-preview"
+            mode="lightboxOnly"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section editorial-summary-section">
+      <div class="editorial-summary reveal">
+        <div>
+          <div class="eyebrow">Approach</div>
+          <h2 class="project-title" style="font-size: 1.9rem;">
+            Designed for visibility, function, and institutional presence.
+          </h2>
+        </div>
+
+        <div>
+          <p>
+            The athletics work emphasizes identity and energy within highly
+            visible school spaces, while the signage work focuses on clarity,
+            navigation, and durable communication.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            Together, these projects show how environmental graphics can support
+            both school culture and practical day-to-day use throughout a building.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 3rem;">
+      <div class="eyebrow">Continue Exploring</div>
+      <div class="case-nav-wrap reveal">
+        <div class="case-nav">
+          <a href="/work/editorial-publications">
+            <span class="label">Previous Project</span>
+            <span class="title">Editorial & Publications</span>
+          </a>
+
+          <a href="/work">
+            <span class="label">All Work</span>
+            <span class="title">Back to All Work</span>
+          </a>
+
+          <a href="/work/branding-environments">
+            <span class="label">Next Project</span>
+            <span class="title">Branding & Environments</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <RevealScript />
+</BaseLayout>

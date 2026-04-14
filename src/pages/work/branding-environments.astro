@@ -1,0 +1,255 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import RevealScript from "../../components/RevealScript.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+
+const jamestownProcessImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Jamestown+Process+1",
+    alt: "Jamestown brand guide process placeholder",
+    caption: "Brand-guide process work focused on structure, hierarchy, and long-term standards development."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Jamestown+Process+2",
+    alt: "Jamestown standards spread placeholder",
+    caption: "Guideline development built around identity consistency and practical future use."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Jamestown+Process+3",
+    alt: "Jamestown process detail placeholder",
+    caption: "An in-progress standards project framed around systems thinking and brand stewardship."
+  }
+];
+
+const environmentImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Environment+1",
+    alt: "Branded school environment placeholder",
+    caption: "Completed branded graphics installed across multiple school spaces."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Environment+2",
+    alt: "Installed school graphics placeholder",
+    caption: "Brand identity translated into physical school environments through large-format graphic applications."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=School+Environment+3",
+    alt: "Installed environment detail placeholder",
+    caption: "A completed environmental branding project designed for visibility, cohesion, and school identity."
+  }
+];
+
+const sensoryHallwayImages = [
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Sensory+Hallway+1",
+    alt: "Sensory hallway placeholder",
+    caption: "Environmental graphics designed to support a sensory hallway experience within the school setting."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Sensory+Hallway+2",
+    alt: "Sensory hallway detail placeholder",
+    caption: "A design approach balancing visual identity, environmental communication, and accessibility-minded use."
+  },
+  {
+    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Sensory+Hallway+3",
+    alt: "Sensory hallway installed placeholder",
+    caption: "A school environment shaped by graphics intended to support both experience and function."
+  }
+];
+---
+
+<BaseLayout
+  title="Branding & Environments — Brittany Childs"
+  description="Brand standards development, branded school spaces, and sensory-environment design."
+>
+  <Nav />
+
+  <main>
+    <section class="section editorial-page-intro">
+      <div class="eyebrow">Branding</div>
+      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+        Branding & Environments
+      </h1>
+      <p class="lead">
+        Branding work developed for educational institutions through standards
+        thinking, environmental application, and human-centered school spaces.
+      </p>
+    </section>
+
+    <section class="section editorial-hero-grid">
+      <div class="frame reveal">
+        <img
+          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Branding+and+Environments"
+          alt="Branding and environments overview"
+        />
+      </div>
+
+      <div class="editorial-hero-copy reveal">
+        <div class="editorial-hero-main">
+          <h2 class="project-title" style="font-size: 2rem; margin-top: 0;">
+            Branding as both a system and an experience of place.
+          </h2>
+
+          <p>
+            This work reflects multiple ways branding functions in school
+            settings: as a standards system, as a visual identity applied across
+            real spaces, and as an environmental experience shaped by design,
+            clarity, and accessibility.
+          </p>
+        </div>
+
+        <div class="editorial-hero-meta">
+          <div class="meta">Client Context: Educational communications / school branding</div>
+          <div class="meta">Role: Brand systems development, graphic design, environmental graphics</div>
+          <div class="meta">Scope: Standards process, branded spaces, sensory-environment design</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section">
+      <div class="branding-case-grid">
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Project One</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            Jamestown Brand Guide Process
+          </h2>
+          <p>
+            This in-progress project focuses on the development of a multi-school
+            branding guide and standards structure for Jamestown Area Schools.
+            Because no formal workflow existed internally, the project also
+            required building a repeatable process for how CABOCES approaches
+            brand-guide development moving forward.
+          </p>
+          <p>
+            The emphasis here is on systems thinking: organizing identity
+            guidance, defining structure, and creating a framework that can
+            support long-term visual consistency.
+          </p>
+        </div>
+
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={jamestownProcessImages}
+            id="branding-jamestown-process"
+            mode="lightboxOnly"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section branding-split-section--second">
+      <div class="branding-case-grid branding-case-grid--reverse">
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={environmentImages}
+            id="branding-school-environment"
+            mode="lightboxOnly"
+          />
+        </div>
+
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Project Two</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            Branded School Environment Graphics
+          </h2>
+          <p>
+            This completed project involved designing branded graphics for
+            multiple school spaces, translating the school’s identity into a
+            coordinated physical environment. The work focused on visibility,
+            school presence, and consistency from space to space.
+          </p>
+          <p>
+            It demonstrates how branding can move beyond guidelines and into
+            finished installations that shape the day-to-day visual experience of
+            the school.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section branding-split-section branding-split-section--second">
+      <div class="branding-case-grid">
+        <div class="branding-case-copy reveal">
+          <div class="eyebrow">Project Three</div>
+          <h2 class="project-title" style="font-size: 2rem;">
+            Sensory Hallway
+          </h2>
+          <p>
+            This project applies environmental graphics in a way that supports
+            experience as well as communication. The sensory hallway work
+            reflects an approach to branding and school environments that is not
+            only visual, but also attentive to accessibility, interaction, and
+            user needs.
+          </p>
+          <p>
+            It expands the branding category beyond standards and signage into
+            the design of environments meant to support students in a more
+            thoughtful and inclusive way.
+          </p>
+        </div>
+
+        <div class="branding-case-preview reveal">
+          <ImageCarousel
+            images={sensoryHallwayImages}
+            id="branding-sensory-hallway"
+            mode="lightboxOnly"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section editorial-summary-section">
+      <div class="editorial-summary reveal">
+        <div>
+          <div class="eyebrow">Approach</div>
+          <h2 class="project-title" style="font-size: 1.9rem;">
+            Structured for identity, applied for real-world use.
+          </h2>
+        </div>
+
+        <div>
+          <p>
+            The brand-guide process reflects branding at the systems level:
+            guidance, structure, and framework-building that can support future
+            communication over time.
+          </p>
+        </div>
+
+        <div>
+          <p>
+            The branded spaces and sensory hallway show branding in applied form,
+            where identity becomes part of the physical environment and the
+            experience of the school itself.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 3rem;">
+      <div class="eyebrow">Continue Exploring</div>
+      <div class="case-nav-wrap reveal">
+        <div class="case-nav">
+          <a href="/work/athletics-signage">
+            <span class="label">Previous Project</span>
+            <span class="title">Athletics & Signage</span>
+          </a>
+
+          <a href="/work">
+            <span class="label">All Work</span>
+            <span class="title">Back to All Work</span>
+          </a>
+
+          <a href="/work/editorial-publications">
+            <span class="label">Next Project</span>
+            <span class="title">Editorial & Publications</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <RevealScript />
+</BaseLayout>

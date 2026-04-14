@@ -4,12 +4,41 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import { projects } from "../../data/projects";
+
+const projects = [
+  {
+    href: "/work/branding-environments",
+    title: "Branding & Environments",
+    category: "Branding",
+    description:
+      "Brand standards development, branded school spaces, and sensory-environment work presented as one cohesive institutional branding category.",
+    image:
+      "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Branding+%26+Environments"
+  },
+  {
+    href: "/work/editorial-publications",
+    title: "Editorial & Publications",
+    category: "Publications",
+    description:
+      "Newsletters, handbooks, planners, calendars, print communication materials, and special print pieces designed for clarity and structure.",
+    image:
+      "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Editorial+%26+Publications"
+  },
+  {
+    href: "/work/athletics-signage",
+    title: "Athletics & Signage",
+    category: "Environmental Graphics",
+    description:
+      "Athletics graphics, vinyl decals, score tables, signage systems, acrylic nameplates, and accessibility-minded communication signs.",
+    image:
+      "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Athletics+%26+Signage"
+  }
+];
 ---
 
 <BaseLayout
   title="Work — Brittany Childs"
-  description="Selected projects in brand systems, editorial publications, and large-format graphics."
+  description="Selected work in branding, editorial publications, and athletics and signage."
 >
   <Nav />
 
@@ -20,8 +49,8 @@ import { projects } from "../../data/projects";
         Selected Projects
       </h1>
       <p class="lead">
-        A selection of brand systems, publication design, and large-format work
-        created for educational communications across multiple school districts.
+        A curated selection of branding, publication design, and environmental
+        graphics created for educational communications across multiple school districts.
       </p>
     </section>
 
