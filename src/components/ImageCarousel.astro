@@ -8,7 +8,7 @@ export interface CarouselImage {
 interface Props {
   images: CarouselImage[];
   id?: string;
-  mode?: "full" | "lightboxOnly";
+  mode?: "full" | "lightboxOnly" | "splitPreview";
 }
 
 const {
@@ -57,6 +57,46 @@ const firstImage = images[0];
 
         {images.length > 1 && (
           <div class="carousel-thumbs" role="tablist" aria-label="Gallery thumbnails">
+            {images.map((image, index) => (
+              <button
+                class={`carousel-thumb ${index === 0 ? "is-active" : ""}`}
+                type="button"
+                data-carousel-thumb
+                data-index={index}
+                aria-label={`View image ${index + 1}`}
+                aria-selected={index === 0 ? "true" : "false"}
+              >
+                <img src={image.src} alt={image.alt} />
+              </button>
+            ))}
+          </div>
+        )}
+      </>
+    ) : mode === "splitPreview" ? (
+      <>
+        <div class="carousel-split-main">
+          <div class="carousel-preview frame">
+            <button
+              class="carousel-image-button carousel-image-button--preview"
+              type="button"
+              aria-label="Open gallery"
+            >
+              <img
+                class="carousel-main-image carousel-main-image--preview"
+                src={firstImage.src}
+                alt={firstImage.alt}
+                data-carousel-main-image
+              />
+            </button>
+          </div>
+        </div>
+
+        {images.length > 1 && (
+          <div
+            class="carousel-thumbs carousel-thumbs--split"
+            role="tablist"
+            aria-label="Gallery thumbnails"
+          >
             {images.map((image, index) => (
               <button
                 class={`carousel-thumb ${index === 0 ? "is-active" : ""}`}
@@ -165,53 +205,52 @@ const firstImage = images[0];
       const lightboxNext = carousel.querySelector(".carousel-lightbox-arrow--next");
 
       const fadeSwap = (imgEl, nextSrc, nextAlt) => {
-  if (!imgEl) return;
+        if (!imgEl) return;
 
-  imgEl.classList.add("is-fading");
+        imgEl.classList.add("is-fading");
 
-  window.setTimeout(() => {
-    imgEl.src = nextSrc;
-    imgEl.alt = nextAlt;
+        window.setTimeout(() => {
+          imgEl.src = nextSrc;
+          imgEl.alt = nextAlt;
 
-    const clearFade = () => {
-      imgEl.classList.remove("is-fading");
-      imgEl.removeEventListener("load", clearFade);
-    };
+          const clearFade = () => {
+            imgEl.classList.remove("is-fading");
+            imgEl.removeEventListener("load", clearFade);
+          };
 
-    imgEl.addEventListener("load", clearFade, { once: true });
+          imgEl.addEventListener("load", clearFade, { once: true });
 
-    // fallback in case image is cached and load timing is inconsistent
-    window.setTimeout(() => {
-      imgEl.classList.remove("is-fading");
-    }, 120);
-  }, 120);
-};
+          window.setTimeout(() => {
+            imgEl.classList.remove("is-fading");
+          }, 120);
+        }, 120);
+      };
 
-const update = () => {
-  const current = images[currentIndex];
-  if (!current) return;
+      const update = () => {
+        const current = images[currentIndex];
+        if (!current) return;
 
-  fadeSwap(mainImage, current.src, current.alt);
-  fadeSwap(lightboxImage, current.src, current.alt);
+        fadeSwap(mainImage, current.src, current.alt);
+        fadeSwap(lightboxImage, current.src, current.alt);
 
-  if (count) {
-    count.textContent = `${currentIndex + 1} / ${images.length}`;
-  }
+        if (count) {
+          count.textContent = `${currentIndex + 1} / ${images.length}`;
+        }
 
-  if (caption) {
-    caption.textContent = current.caption || "";
-  }
+        if (caption) {
+          caption.textContent = current.caption || "";
+        }
 
-  if (lightboxCaption) {
-    lightboxCaption.textContent = current.caption || "";
-  }
+        if (lightboxCaption) {
+          lightboxCaption.textContent = current.caption || "";
+        }
 
-  thumbs.forEach((thumb, index) => {
-    const active = index === currentIndex;
-    thumb.classList.toggle("is-active", active);
-    thumb.setAttribute("aria-selected", active ? "true" : "false");
-  });
-};
+        thumbs.forEach((thumb, index) => {
+          const active = index === currentIndex;
+          thumb.classList.toggle("is-active", active);
+          thumb.setAttribute("aria-selected", active ? "true" : "false");
+        });
+      };
 
       const goTo = (index) => {
         currentIndex = (index + images.length) % images.length;
@@ -223,23 +262,23 @@ const update = () => {
         lightbox.hidden = false;
 
         window.requestAnimationFrame(() => {
-            lightbox.classList.add("is-open");
+          lightbox.classList.add("is-open");
         });
 
         document.body.style.overflow = "hidden";
-    };
+      };
 
-    const closeLightbox = () => {
+      const closeLightbox = () => {
         if (!lightbox) return;
 
         lightbox.classList.remove("is-open");
 
         window.setTimeout(() => {
-            lightbox.hidden = true;
+          lightbox.hidden = true;
         }, 300);
 
-  document.body.style.overflow = "";
-};
+        document.body.style.overflow = "";
+      };
 
       prevButton?.addEventListener("click", () => goTo(currentIndex - 1));
       nextButton?.addEventListener("click", () => goTo(currentIndex + 1));

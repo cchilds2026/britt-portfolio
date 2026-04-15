@@ -4,7 +4,11 @@ const { project } = Astro.props;
 
 <a class="card reveal" href={project.href}>
   <div class="frame">
-    <img src={project.image} alt={project.title} />
+    <img
+      src={project.image}
+      alt={project.title}
+      class={project.imageClass}
+    />
   </div>
   <div class="card-body">
     <div class="meta">{project.category}</div>

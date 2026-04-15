@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.1.4"
+    "astro": "^6.1.4",
+    "pdfjs-dist": "^5.6.205"
   }
 }

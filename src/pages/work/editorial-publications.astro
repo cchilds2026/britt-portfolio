@@ -3,59 +3,122 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
-import ImageCarousel from "../../components/ImageCarousel.astro";
+import PdfPreview from "../../components/PdfPreview.astro";
 
-const publicationImages = [
+const publicationDocs = [
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletters+1",
-    alt: "Newsletter placeholder",
-    caption: "Recurring publication materials designed for clarity, structure, and institutional communication."
+    src: "/pdf/Newsletter-01.pdf",
+    label: "Issue 1",
+    caption:
+      "Recurring publication materials designed for clarity, structure, and institutional communication."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Newsletters+2",
-    alt: "Publication spread placeholder",
-    caption: "Editorial layouts built for readability, pacing, and organized communication."
+    src: "/pdf/Newsletter-02.pdf",
+    label: "Issue 2",
+    caption:
+      "Editorial layouts built for readability, pacing, and organized communication."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Print+Documents",
-    alt: "Print document placeholder",
-    caption: "Communication pieces designed to feel readable, polished, and practical for school audiences."
+    src: "/pdf/Newsletter-03.pdf",
+    label: "Issue 3",
+    caption:
+      "Publication design shaped by hierarchy, consistency, and readable page flow."
+  },
+  {
+    src: "/pdf/Newsletter-04.pdf",
+    label: "Issue 4",
+    caption:
+      "A newsletter example showing recurring communication handled through a consistent editorial system."
   }
 ];
 
-const planningImages = [
+const planningDocs = [
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Handbooks",
-    alt: "Handbook placeholder",
-    caption: "Organizational materials designed for navigation, consistency, and repeated use."
+    src: "/pdf/Admin-01.pdf",
+    label: "Admin 1",
+    caption:
+      "Administrative publication work designed for structure, hierarchy, and practical use."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Planners+and+Calendars",
-    alt: "Planner and calendar placeholder",
-    caption: "Planners and calendars built around function, readability, and durable structure."
+    src: "/pdf/Admin-02.pdf",
+    label: "Admin 2",
+    caption:
+      "Long-form organizational material built for readability and repeated reference."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Organizational+Docs",
-    alt: "Organizational document placeholder",
-    caption: "Documents shaped by hierarchy and system thinking rather than decorative layout alone."
+    src: "/pdf/Admin-03.pdf",
+    label: "Admin 3",
+    caption:
+      "Administrative documents organized for clarity, pacing, and usability."
+  },
+  {
+    src: "/pdf/Calendar-01.pdf",
+    label: "Calendar 1",
+    caption:
+      "Calendar design organized for clarity, pacing, and everyday usability."
+  },
+  {
+    src: "/pdf/Calendar-04.pdf",
+    label: "Calendar 4",
+    caption:
+      "Calendar and planning material structured for repeated reference."
+  },
+  {
+    src: "/pdf/Calendar-05.pdf",
+    label: "Calendar 5",
+    caption:
+      "A planning example showing layout systems built for practical use."
+  },
+  {
+    src: "/pdf/Planner-01.pdf",
+    label: "Planner 1",
+    caption:
+      "Planner and organizational layouts designed to support navigation and routine use."
+  },
+  {
+    src: "/pdf/Planner-02.pdf",
+    label: "Planner 2",
+    caption:
+      "Planning materials built around function, consistency, and usability."
   }
 ];
 
-const specialPrintImages = [
+const specialPrintDocs = [
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Greeting+Cards",
-    alt: "Greeting card placeholder",
-    caption: "Special print pieces designed with the same attention to tone, craft, and communication."
+    src: "/pdf/Brochure-01.pdf",
+    label: "Brochure",
+    caption:
+      "Brochure work showing editorial structure applied to smaller-format print communication."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Cards+and+Print+1",
-    alt: "Special print placeholder",
-    caption: "Smaller-format pieces that still require clarity, polish, and visual cohesion."
+    src: "/pdf/Cards-01.pdf",
+    label: "Card 1",
+    caption:
+      "Special print pieces designed with the same attention to tone, craft, and communication."
   },
   {
-    src: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Cards+and+Print+2",
-    alt: "Special print detail placeholder",
-    caption: "Editorial and print sensibility applied across a range of communication formats."
+    src: "/pdf/Flyer-02.pdf",
+    label: "Flyer 2",
+    caption:
+      "A print example showing how hierarchy and pacing still matter in shorter-form formats."
+  },
+  {
+    src: "/pdf/Flyer-03.pdf",
+    label: "Flyer 3",
+    caption:
+      "Smaller-format communication designed to be clear, polished, and easy to scan."
+  },
+  {
+    src: "/pdf/Flyer-04.pdf",
+    label: "Flyer 4",
+    caption:
+      "Print communication shaped by concise hierarchy and strong visual organization."
+  },
+  {
+    src: "/pdf/Stickers-01.pdf",
+    label: "Stickers",
+    caption:
+      "Graphic print work showing how branding and communication can extend into smaller supporting materials."
   }
 ];
 ---
@@ -69,7 +132,7 @@ const specialPrintImages = [
   <main>
     <section class="section editorial-page-intro">
       <div class="eyebrow">Publications</div>
-      <h1 class="display" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+      <h1 class="display branding-page-title">
         Editorial & Publications
       </h1>
       <p class="lead">
@@ -79,17 +142,19 @@ const specialPrintImages = [
       </p>
     </section>
 
-    <section class="section editorial-hero-grid">
-      <div class="frame reveal">
-        <img
-          src="https://placehold.co/1600x1000/e9e1d7/1f1b18?text=Editorial+and+Publications"
-          alt="Editorial and publications overview"
-        />
-      </div>
+    <section class="editorial-top-wrap">
+      <div class="editorial-top-grid">
+        <div class="editorial-top-media reveal">
+          <div class="frame editorial-top-frame">
+            <img
+              src="/images/editorial-publications/COC-01.png"
+              alt="Editorial and publications overview"
+            />
+          </div>
+        </div>
 
-      <div class="editorial-hero-copy reveal">
-        <div class="editorial-hero-main">
-          <h2 class="project-title" style="font-size: 2rem; margin-top: 0;">
+        <div class="editorial-top-copy reveal">
+          <h2 class="project-title branding-hero-subtitle">
             Printed communication shaped by structure, clarity, and continuity.
           </h2>
 
@@ -99,21 +164,21 @@ const specialPrintImages = [
             handbooks, calendars, planners, organizational documents, and
             special print pieces designed to communicate clearly and function well.
           </p>
-        </div>
 
-        <div class="editorial-hero-meta">
-          <div class="meta">Client: Multiple school districts through CABOCES</div>
-          <div class="meta">Role: Design, layout, production preparation</div>
-          <div class="meta">Scope: Newsletters, handbooks, planners, calendars, print pieces</div>
+          <div class="editorial-hero-meta editorial-top-meta">
+            <div class="meta">Client: Multiple school districts through CABOCES</div>
+            <div class="meta">Role: Design, layout, production preparation</div>
+            <div class="meta">Scope: Newsletters, handbooks, planners, calendars, print pieces</div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section branding-split-section">
-      <div class="branding-case-grid">
-        <div class="branding-case-copy reveal">
+      <div class="branding-case-grid editorial-case-grid">
+        <div class="branding-case-copy editorial-case-copy reveal">
           <div class="eyebrow">Section One</div>
-          <h2 class="project-title" style="font-size: 2rem;">
+          <h2 class="project-title section-title">
             Publications & Newsletters
           </h2>
           <p>
@@ -123,31 +188,38 @@ const specialPrintImages = [
             to communicate information in a format that feels organized and
             useful to school audiences.
           </p>
+          <p>
+            These examples are presented as interactive document previews so the
+            pacing, page systems, and reading experience can be seen more like a
+            printed portfolio than a set of isolated images.
+          </p>
         </div>
 
         <div class="branding-case-preview reveal">
-          <ImageCarousel
-            images={publicationImages}
-            id="editorial-publications-preview"
-            mode="lightboxOnly"
-          />
+          <div class="editorial-pdf-preview">
+            <PdfPreview
+              id="editorial-publications-preview"
+              documents={publicationDocs}
+            />
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section branding-split-section branding-split-section--second">
-      <div class="branding-case-grid branding-case-grid--reverse">
+      <div class="branding-case-grid branding-case-grid--reverse editorial-case-grid">
         <div class="branding-case-preview reveal">
-          <ImageCarousel
-            images={planningImages}
-            id="editorial-planning-preview"
-            mode="lightboxOnly"
-          />
+          <div class="editorial-pdf-preview">
+            <PdfPreview
+              id="editorial-planning-preview"
+              documents={planningDocs}
+            />
+          </div>
         </div>
 
-        <div class="branding-case-copy reveal">
+        <div class="branding-case-copy editorial-case-copy reveal">
           <div class="eyebrow">Section Two</div>
-          <h2 class="project-title" style="font-size: 2rem;">
+          <h2 class="project-title section-title">
             Handbooks, Planners & Organizational Materials
           </h2>
           <p>
@@ -156,15 +228,20 @@ const specialPrintImages = [
             emphasize navigation, consistency, usability, and the construction
             of durable page systems that can support repeated use.
           </p>
+          <p>
+            In these materials, hierarchy and pacing are as important as the
+            visual system itself because the documents are meant to be used,
+            revisited, and understood over time.
+          </p>
         </div>
       </div>
     </section>
 
     <section class="section branding-split-section branding-split-section--second">
-      <div class="branding-case-grid">
-        <div class="branding-case-copy reveal">
+      <div class="branding-case-grid editorial-case-grid">
+        <div class="branding-case-copy editorial-case-copy reveal">
           <div class="eyebrow">Section Three</div>
-          <h2 class="project-title" style="font-size: 2rem;">
+          <h2 class="project-title section-title">
             Greeting Cards & Special Print Pieces
           </h2>
           <p>
@@ -173,14 +250,20 @@ const specialPrintImages = [
             polish. This work shows how the same editorial discipline can scale
             down into more compact and expressive formats.
           </p>
+          <p>
+            These examples broaden the category beyond recurring publications and
+            show how print design can remain clear and intentional across a
+            range of formats.
+          </p>
         </div>
 
         <div class="branding-case-preview reveal">
-          <ImageCarousel
-            images={specialPrintImages}
-            id="editorial-special-print-preview"
-            mode="lightboxOnly"
-          />
+          <div class="editorial-pdf-preview">
+            <PdfPreview
+              id="editorial-special-print-preview"
+              documents={specialPrintDocs}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -189,7 +272,7 @@ const specialPrintImages = [
       <div class="editorial-summary reveal">
         <div>
           <div class="eyebrow">Approach</div>
-          <h2 class="project-title" style="font-size: 1.9rem;">
+          <h2 class="project-title summary-title">
             Designed to be readable, usable, and institutionally coherent.
           </h2>
         </div>
@@ -212,7 +295,7 @@ const specialPrintImages = [
       </div>
     </section>
 
-    <section class="section" style="padding-top: 3rem;">
+    <section class="section continue-exploring-section">
       <div class="eyebrow">Continue Exploring</div>
       <div class="case-nav-wrap reveal">
         <div class="case-nav">

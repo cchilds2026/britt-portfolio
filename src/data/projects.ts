@@ -6,7 +6,8 @@ export const projects = [
     year: "2026",
     summary:
       "A comprehensive multi-school identity system establishing structure, consistency, and a new internal workflow for brand standards development.",
-    image: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Jamestown+Brand+Book"
+    image:
+      "/images/branding-environments/school-branding/school-branding-01.JPG",
   },
   {
     slug: "editorial-publications",
@@ -15,7 +16,7 @@ export const projects = [
     year: "2025",
     summary:
       "Newsletters, calendars, agendas, and graduation materials designed for school communications with emphasis on hierarchy, readability, and consistency.",
-    image: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Editorial+Work"
+    image: "/Resume-icon.png",
   },
   {
     slug: "large-format-signage",
@@ -24,6 +25,7 @@ export const projects = [
     year: "2025",
     summary:
       "Banners, signage, and vinyl graphics created for events, visibility, and branded school environments.",
-    image: "https://placehold.co/1200x1500/e9e1d7/1f1b18?text=Large+Format"
-  }
+    image:
+      "/images/athletics-signage/athletics-graphics/athletics-graphics-01.jpg",
+  },
 ];
