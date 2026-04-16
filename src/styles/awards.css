@@ -1,0 +1,112 @@
+/* =========================
+   Awards Grid
+========================= */
+.awards-section {
+  width: 100%;
+  padding-top: 2.5rem;
+}
+
+.awards-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.awards-grid--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.award-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.award-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  padding: 0;
+}
+
+.award-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.award-logo--nspra {
+  width: 170px;
+  max-width: 78%;
+}
+
+.award-logo--nyspra {
+  width: 200px;
+  max-width: 88%;
+}
+
+.award-preview-wrap {
+  position: relative;
+}
+
+.award-preview {
+  min-width: 0;
+}
+
+.award-preview .image-carousel {
+  max-width: none;
+}
+
+.award-preview .carousel-main-image--preview {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.award-ribbon-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -8px;
+  z-index: 3;
+  width: 78px;
+  transform: rotate(3deg);
+  pointer-events: none;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.award-ribbon {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.14));
+}
+
+.award-copy {
+  padding: 0 0.25rem;
+  text-align: center;
+}
+
+.award-copy .project-title {
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin: 0 0 0.45rem;
+  min-height: 3.6em;
+}
+
+.award-link {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 0.98rem;
+  transition: opacity 0.2s ease;
+}
+
+.award-link:hover {
+  opacity: 0.75;
+}

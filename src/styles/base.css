@@ -1,0 +1,64 @@
+/* =========================
+   Design tokens
+========================= */
+:root {
+  --bg: #f6f2eb;
+  --surface: rgba(255, 255, 255, 0.55);
+  --text: #1f1b18;
+  --muted: #6d645d;
+  --accent: #5a3a32;
+  --line: #d9d1c8;
+  --max: 1180px;
+  --radius: 20px;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Base / reset
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: #0b57d0;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+  text-decoration-thickness: 0.08em;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0842a0;
+}
+
+a:visited {
+  color: #6a3dc1;
+}
+
+a:focus-visible {
+  outline: 2px solid #0b57d0;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+p {
+  max-width: 68ch;
+}

@@ -1,0 +1,112 @@
+/* =========================
+   Navigation
+========================= */
+.topnav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(246, 242, 235, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.top-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(90, 58, 50, 0.12);
+  overflow: hidden;
+}
+
+.top-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.08s linear;
+}
+
+.topnav {
+  padding: 1rem 0 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.topnav .brand {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-bottom: 0.1rem;
+}
+
+.topnav .brand::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.08rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.24s ease;
+}
+
+.topnav .brand:hover::after,
+.topnav .brand:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 0.95rem;
+}
+
+.nav-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.topnav .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--muted);
+}
+
+.topnav .links a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.1rem;
+}
+
+.topnav .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.08rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.24s ease;
+}
+
+.topnav .links a:hover::after,
+.topnav .links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.topnav .links a:focus-visible {
+  outline: none;
+  border-radius: 0;
+}

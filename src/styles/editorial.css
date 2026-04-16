@@ -1,0 +1,250 @@
+/* =========================
+   Case study pages
+========================= */
+.branding-split-section {
+  padding-top: 0;
+  padding-bottom: 2rem;
+}
+
+.branding-split-section--second {
+  padding-top: 0;
+}
+
+.branding-case-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 1rem 1.35rem;
+  align-items: start;
+}
+
+.branding-case-grid--reverse {
+  grid-template-columns: 1.08fr 0.92fr;
+}
+
+.branding-case-copy {
+  max-width: 36rem;
+}
+
+.branding-case-copy p {
+  max-width: 56ch;
+  margin: 0 0 1rem;
+}
+
+.branding-case-preview {
+  display: contents;
+}
+
+.branding-case-preview .image-carousel {
+  display: contents;
+}
+
+.branding-case-preview .carousel-split-main {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 100%;
+  max-width: 56ch;
+  margin-left: auto;
+  align-self: start;
+}
+
+.branding-case-preview .carousel-thumbs--split {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  max-width: 56ch;
+  margin-top: 0.15rem;
+}
+
+.branding-case-grid--reverse .branding-case-preview .carousel-split-main {
+  grid-column: 1;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.branding-case-grid--reverse .branding-case-preview .carousel-thumbs--split {
+  grid-column: 2;
+  justify-self: start;
+}
+
+.branding-case-grid--reverse
+  .branding-case-preview
+  [data-carousel="school-signage-preview"]
+  .carousel-thumbs--split {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+}
+
+.branding-case-preview .carousel-main-image--preview {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Case study top sections */
+.branding-top-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 56ch) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.branding-top-copy {
+  max-width: none;
+}
+
+.branding-top-copy .lead {
+  margin-bottom: 2rem;
+}
+
+.branding-top-meta {
+  max-width: 34rem;
+}
+
+.branding-top-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: 100%;
+  max-width: 48ch;
+  margin-left: 0;
+  margin-right: 0;
+  order: -1;
+}
+
+.branding-top-image {
+  overflow: hidden;
+}
+
+.branding-top-image img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.continue-exploring-section {
+  padding-top: 3rem;
+}
+
+/* Branding page thumbnail layouts */
+[data-carousel="branding-guide-process-preview"] .carousel-split-main {
+  max-width: 56ch;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-main-image--preview {
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+[data-carousel="branding-environment-preview"] .carousel-thumbs--split,
+[data-carousel="branding-sensory-hallway-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-thumb img,
+[data-carousel="branding-environment-preview"] .carousel-thumb img,
+[data-carousel="branding-sensory-hallway-preview"] .carousel-thumb img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.branding-case-preview .carousel-thumbs--split .carousel-thumb {
+  transform: none;
+}
+
+.branding-case-preview .carousel-thumbs--split .carousel-thumb:hover,
+.branding-case-preview .carousel-thumbs--split .carousel-thumb.is-active {
+  transform: translateY(-1px);
+}
+
+/* Athletics & signage page thumbnail layouts */
+[data-carousel="athletics-graphics-preview"] .carousel-split-main {
+  max-width: 56ch;
+}
+
+[data-carousel="athletics-graphics-preview"] .carousel-main-image--preview {
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="athletics-graphics-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: -0.15rem;
+}
+
+[data-carousel="school-signage-preview"] .carousel-split-main {
+  max-width: 48ch;
+}
+
+[data-carousel="school-signage-preview"] .carousel-main-image--preview {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="school-signage-preview"] .carousel-thumbs--split {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 3rem;
+  padding-top: 5rem;
+}
+
+[data-carousel="athletics-graphics-preview"] .carousel-thumb img,
+[data-carousel="school-signage-preview"] .carousel-thumb img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-split-main {
+  max-width: 68ch;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-preview {
+  background: #e7e4de;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-main-image--preview {
+  aspect-ratio: 21 / 8;
+  object-fit: contain;
+  background: #e7e4de;
+  padding: 1rem;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumb {
+  background: #e7e4de;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumb img {
+  aspect-ratio: 21 / 8;
+  object-fit: contain;
+  background: #e7e4de48;
+  padding: 0.35rem;
+}

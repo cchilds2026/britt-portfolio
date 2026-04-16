@@ -1,0 +1,132 @@
+---
+const { targetId, documents = [] } = Astro.props;
+const serializedDocuments = JSON.stringify(documents);
+---
+
+<div
+  class="editorial-doc-thumbs"
+  data-pdf-thumb-nav
+  data-target-id={targetId}
+>
+  <div
+    class="pdf-preview__thumbs editorial-doc-thumbs__grid"
+    data-pdf-thumb-buttons
+    role="tablist"
+    aria-label="Document previews"
+  ></div>
+
+  <script type="application/json" data-pdf-documents set:html={serializedDocuments}></script>
+</div>
+
+<script type="module">
+  import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+
+  async function loadPdf(url) {
+    const loadingTask = pdfjsLib.getDocument(url);
+    return await loadingTask.promise;
+  }
+
+  async function renderPageToCanvas(pdf, pageNumber, canvas, maxWidth, maxHeight) {
+    const page = await pdf.getPage(pageNumber);
+    const baseViewport = page.getViewport({ scale: 1 });
+
+    let scale = maxWidth / baseViewport.width;
+    if (maxHeight) {
+      scale = Math.min(scale, maxHeight / baseViewport.height);
+    }
+
+    const viewport = page.getViewport({ scale });
+    const context = canvas.getContext("2d");
+    const ratio = window.devicePixelRatio || 1;
+
+    canvas.width = Math.floor(viewport.width * ratio);
+    canvas.height = Math.floor(viewport.height * ratio);
+    canvas.style.width = `${viewport.width}px`;
+    canvas.style.height = `${viewport.height}px`;
+
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    await page.render({
+      canvasContext: context,
+      viewport
+    }).promise;
+  }
+
+  function initThumbNav(root) {
+    if (!root || root.dataset.pdfThumbsInitialized === "true") return;
+    root.dataset.pdfThumbsInitialized = "true";
+
+    const dataEl = root.querySelector("[data-pdf-documents]");
+    const buttonsWrap = root.querySelector("[data-pdf-thumb-buttons]");
+    const targetId = root.dataset.targetId;
+
+    if (!dataEl || !buttonsWrap || !targetId) return;
+
+    const documents = JSON.parse(dataEl.textContent || "[]");
+    if (!documents.length) return;
+
+    function updateActive(index) {
+      const thumbs = root.querySelectorAll(".pdf-preview__thumb");
+      thumbs.forEach((thumb, thumbIndex) => {
+        thumb.classList.toggle("is-active", thumbIndex === index);
+        thumb.setAttribute("aria-selected", thumbIndex === index ? "true" : "false");
+      });
+    }
+
+    async function renderThumb(doc, index) {
+      const thumbBtn = document.createElement("button");
+      thumbBtn.type = "button";
+      thumbBtn.className = "pdf-preview__thumb";
+      if (index === 0) thumbBtn.classList.add("is-active");
+      thumbBtn.setAttribute("role", "tab");
+      thumbBtn.setAttribute("aria-selected", index === 0 ? "true" : "false");
+
+      const thumbCanvas = document.createElement("canvas");
+      thumbCanvas.className = "pdf-preview__thumb-canvas";
+
+      thumbBtn.appendChild(thumbCanvas);
+
+      thumbBtn.addEventListener("click", () => {
+        updateActive(index);
+        document.dispatchEvent(
+          new CustomEvent("pdf-preview:set-document", {
+            detail: { previewId: targetId, index }
+          })
+        );
+      });
+
+      buttonsWrap.appendChild(thumbBtn);
+
+      try {
+        const pdf = await loadPdf(doc.src);
+        await renderPageToCanvas(pdf, 1, thumbCanvas, 140, 180);
+      } catch (error) {
+        console.error("Thumbnail nav render failed:", error);
+      }
+    }
+
+    documents.forEach((doc, index) => {
+      renderThumb(doc, index);
+    });
+
+    document.addEventListener("pdf-preview:set-document", (event) => {
+      const { previewId, index } = event.detail || {};
+      if (previewId !== targetId) return;
+      updateActive(index);
+    });
+  }
+
+  function initAllThumbNavs() {
+    document.querySelectorAll("[data-pdf-thumb-nav]").forEach(initThumbNav);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllThumbNavs, { once: true });
+  } else {
+    initAllThumbNavs();
+  }
+</script>

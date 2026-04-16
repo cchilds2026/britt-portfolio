@@ -4,6 +4,7 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
 import PdfPreview from "../../components/PdfPreview.astro";
+import PdfPreviewThumbs from "../../components/PdfPreviewThumbs.astro";
 
 const publicationDocs = [
   {
@@ -130,19 +131,7 @@ const specialPrintDocs = [
   <Nav />
 
   <main>
-    <section class="section editorial-page-intro">
-      <div class="eyebrow">Publications</div>
-      <h1 class="display branding-page-title">
-        Editorial & Publications
-      </h1>
-      <p class="lead">
-        Editorial and print communication work designed for educational
-        institutions, including recurring publications, organizational
-        materials, and special print pieces.
-      </p>
-    </section>
-
-    <section class="editorial-top-wrap">
+    <section class="editorial-top-wrap editorial-top-wrap--title-inline">
       <div class="editorial-top-grid">
         <div class="editorial-top-media reveal">
           <div class="frame editorial-top-frame">
@@ -154,6 +143,16 @@ const specialPrintDocs = [
         </div>
 
         <div class="editorial-top-copy reveal">
+          <div class="eyebrow">Publications</div>
+          <h1 class="display branding-page-title">
+            Editorial & Publications
+          </h1>
+          <p class="lead">
+            Editorial and print communication work designed for educational
+            institutions, including recurring publications, organizational
+            materials, and special print pieces.
+          </p>
+
           <h2 class="project-title branding-hero-subtitle">
             Printed communication shaped by structure, clarity, and continuity.
           </h2>
@@ -193,6 +192,13 @@ const specialPrintDocs = [
             pacing, page systems, and reading experience can be seen more like a
             printed portfolio than a set of isolated images.
           </p>
+
+          <div class="editorial-doc-nav">
+            <PdfPreviewThumbs
+              targetId="editorial-publications-preview"
+              documents={publicationDocs}
+            />
+          </div>
         </div>
 
         <div class="branding-case-preview reveal">
@@ -200,6 +206,7 @@ const specialPrintDocs = [
             <PdfPreview
               id="editorial-publications-preview"
               documents={publicationDocs}
+              showThumbs={false}
             />
           </div>
         </div>
@@ -213,6 +220,7 @@ const specialPrintDocs = [
             <PdfPreview
               id="editorial-planning-preview"
               documents={planningDocs}
+              showThumbs={false}
             />
           </div>
         </div>
@@ -233,6 +241,13 @@ const specialPrintDocs = [
             visual system itself because the documents are meant to be used,
             revisited, and understood over time.
           </p>
+
+          <div class="editorial-doc-nav">
+            <PdfPreviewThumbs
+              targetId="editorial-planning-preview"
+              documents={planningDocs}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -255,6 +270,13 @@ const specialPrintDocs = [
             show how print design can remain clear and intentional across a
             range of formats.
           </p>
+
+          <div class="editorial-doc-nav">
+            <PdfPreviewThumbs
+              targetId="editorial-special-print-preview"
+              documents={specialPrintDocs}
+            />
+          </div>
         </div>
 
         <div class="branding-case-preview reveal">
@@ -262,6 +284,7 @@ const specialPrintDocs = [
             <PdfPreview
               id="editorial-special-print-preview"
               documents={specialPrintDocs}
+              showThumbs={false}
             />
           </div>
         </div>

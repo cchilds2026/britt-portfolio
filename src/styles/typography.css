@@ -1,0 +1,54 @@
+/* =========================
+   Typography
+========================= */
+.eyebrow {
+  margin-bottom: 0.9rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.display {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.95;
+  font-weight: 600;
+}
+
+.lead {
+  max-width: 42rem;
+  font-size: 1.08rem;
+  color: var(--muted);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.project-title {
+  margin: 0.4rem 0 0.55rem;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.section-title {
+  font-size: 2rem;
+}
+
+.summary-title {
+  font-size: 1.9rem;
+}
+
+.work-page-title,
+.branding-page-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.branding-hero-subtitle,
+.home-feature-title {
+  font-size: 2rem;
+  margin-top: 0;
+}

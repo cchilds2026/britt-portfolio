@@ -1,264 +1,398 @@
 ---
-interface DocumentItem {
-  src: string;
-  label: string;
-  caption?: string;
-}
-
-interface Props {
-  id: string;
-  documents: DocumentItem[];
-}
-
-const { id, documents } = Astro.props;
-const initialDoc = documents[0];
+const { id, documents = [], showThumbs = true } = Astro.props;
+const safeId = id ?? `pdf-preview-${Math.random().toString(36).slice(2, 9)}`;
+const serializedDocuments = JSON.stringify(documents);
 ---
 
 <div
   class="pdf-preview"
-  data-pdf-preview={id}
-  data-initial-doc={initialDoc?.src}
+  data-pdf-preview
+  data-preview-id={safeId}
+  id={safeId}
 >
   <button
     type="button"
-    class="pdf-preview__trigger frame"
-    data-open-lightbox
-    aria-label="Open PDF preview"
+    class="pdf-preview__trigger"
+    data-pdf-trigger
+    aria-haspopup="dialog"
+    aria-controls={`${safeId}-lightbox`}
   >
     <div class="pdf-preview__trigger-inner">
-      <canvas class="pdf-preview__trigger-canvas" aria-hidden="true"></canvas>
-
+      <canvas class="pdf-preview__trigger-canvas" data-pdf-main-canvas></canvas>
       <div class="pdf-preview__overlay">
-        <span class="pdf-preview__overlay-label">View Pages</span>
+        <span class="pdf-preview__overlay-label">Open document preview</span>
       </div>
     </div>
   </button>
 
-  <p class="pdf-preview__inline-caption meta">
-    {initialDoc?.caption ?? ""}
-  </p>
+  <p class="pdf-preview__inline-caption meta" data-pdf-inline-caption></p>
 
-  <div class="pdf-lightbox" hidden data-lightbox>
+  {showThumbs && (
+    <div
+      class="pdf-preview__thumbs"
+      data-pdf-thumbs
+      role="tablist"
+      aria-label="Document previews"
+    ></div>
+  )}
+
+  <div
+    class="pdf-lightbox"
+    id={`${safeId}-lightbox`}
+    data-pdf-lightbox
+    hidden
+    aria-hidden="true"
+  >
     <button
       type="button"
       class="pdf-lightbox__backdrop"
-      data-close-lightbox
-      aria-label="Close PDF preview"
+      data-pdf-close
+      aria-label="Close document preview"
     ></button>
 
     <div class="pdf-lightbox__dialog" role="dialog" aria-modal="true" aria-label="PDF preview">
       <button
         type="button"
         class="pdf-lightbox__close"
-        data-close-lightbox
-        aria-label="Close PDF preview"
+        data-pdf-close
+        aria-label="Close"
       >
         ×
       </button>
 
       <div class="pdf-lightbox__topbar">
-        <div class="pdf-lightbox__doc-tabs" role="tablist" aria-label="Choose document">
-          {documents.map((doc, index) => (
-            <button
-              type="button"
-              class={`pdf-lightbox__doc-tab ${index === 0 ? "is-active" : ""}`}
-              data-doc-tab
-              data-src={doc.src}
-              data-caption={doc.caption ?? ""}
-              aria-selected={index === 0 ? "true" : "false"}
-            >
-              {doc.label}
-            </button>
-          ))}
-        </div>
+        <div class="pdf-lightbox__doc-tabs" data-pdf-doc-tabs></div>
       </div>
 
       <div class="pdf-lightbox__viewer">
-        <button type="button" class="pdf-lightbox__nav pdf-lightbox__nav--prev" data-prev-page>
+        <button
+          type="button"
+          class="pdf-lightbox__nav"
+          data-pdf-prev
+          aria-label="Previous page"
+        >
           ‹
         </button>
 
         <div class="pdf-lightbox__canvas-wrap">
-          <canvas class="pdf-lightbox__canvas" aria-label="PDF page preview"></canvas>
+          <canvas class="pdf-lightbox__canvas" data-pdf-lightbox-canvas></canvas>
         </div>
 
-        <button type="button" class="pdf-lightbox__nav pdf-lightbox__nav--next" data-next-page>
+        <button
+          type="button"
+          class="pdf-lightbox__nav"
+          data-pdf-next
+          aria-label="Next page"
+        >
           ›
         </button>
       </div>
 
       <div class="pdf-lightbox__footer">
-        <div class="pdf-lightbox__status" data-page-status>Page 1 of 1</div>
-        <p class="pdf-lightbox__caption" data-caption>
-          {initialDoc?.caption ?? ""}
-        </p>
+        <div class="pdf-lightbox__status" data-pdf-status></div>
+        <p class="pdf-lightbox__caption" data-pdf-caption></p>
       </div>
     </div>
   </div>
+
+  <script type="application/json" data-pdf-documents set:html={serializedDocuments}></script>
 </div>
 
-<script>
-  import * as pdfjsLib from "pdfjs-dist/build/pdf.mjs";
-  import workerUrl from "pdfjs-dist/build/pdf.worker.mjs?url";
+<script type="module">
+  import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+
+  async function loadPdf(url) {
+    const loadingTask = pdfjsLib.getDocument(url);
+    return await loadingTask.promise;
+  }
+
+  async function renderPageToCanvas(pdf, pageNumber, canvas, maxWidth, maxHeight) {
+    const page = await pdf.getPage(pageNumber);
+    const baseViewport = page.getViewport({ scale: 1 });
+
+    let scale = maxWidth / baseViewport.width;
+    if (maxHeight) {
+      scale = Math.min(scale, maxHeight / baseViewport.height);
+    }
+
+    const viewport = page.getViewport({ scale });
+    const context = canvas.getContext("2d");
+    const ratio = window.devicePixelRatio || 1;
+
+    canvas.width = Math.floor(viewport.width * ratio);
+    canvas.height = Math.floor(viewport.height * ratio);
+    canvas.style.width = `${viewport.width}px`;
+    canvas.style.height = `${viewport.height}px`;
+
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    await page.render({
+      canvasContext: context,
+      viewport
+    }).promise;
+  }
+
+  function ensurePdfState(root, documents) {
+    if (root.__pdfState) return root.__pdfState;
+
+    root.__pdfState = {
+      documents,
+      activeDocIndex: 0,
+      activePage: 1,
+      activePdf: null,
+      isLightboxOpen: false,
+      previewRoots: new Set()
+    };
+
+    return root.__pdfState;
+  }
+
+  function broadcastDocumentChange(previewId, index) {
+    document.dispatchEvent(
+      new CustomEvent("pdf-preview:set-document", {
+        detail: { previewId, index }
+      })
+    );
+  }
 
   function initPdfPreview(root) {
-    const triggerCanvas = root.querySelector(".pdf-preview__trigger-canvas");
-    const lightboxCanvas = root.querySelector(".pdf-lightbox__canvas");
-    const openButton = root.querySelector("[data-open-lightbox]");
-    const closeButtons = root.querySelectorAll("[data-close-lightbox]");
-    const lightbox = root.querySelector("[data-lightbox]");
-    const prevButton = root.querySelector("[data-prev-page]");
-    const nextButton = root.querySelector("[data-next-page]");
-    const pageStatus = root.querySelector("[data-page-status]");
-    const captionEl = root.querySelector("[data-caption]");
-    const inlineCaption = root.querySelector(".pdf-preview__inline-caption");
-    const tabs = Array.from(root.querySelectorAll("[data-doc-tab]"));
+    if (!root || root.dataset.pdfInitialized === "true") return;
+    root.dataset.pdfInitialized = "true";
 
-    let pdfDoc = null;
-    let currentPage = 1;
-    let currentSrc = root.getAttribute("data-initial-doc") || "";
-    let renderTask = null;
+    const dataEl = root.querySelector("[data-pdf-documents]");
+    if (!dataEl) return;
 
-    async function loadDocument(src) {
-      if (!src || !triggerCanvas || !lightboxCanvas) return;
+    const documents = JSON.parse(dataEl.textContent || "[]");
+    if (!documents.length) return;
 
-      currentSrc = src;
-      currentPage = 1;
+    const previewId = root.dataset.previewId;
 
-      if (renderTask) {
-        try {
-          renderTask.cancel();
-        } catch {}
+    const trigger = root.querySelector("[data-pdf-trigger]");
+    const mainCanvas = root.querySelector("[data-pdf-main-canvas]");
+    const inlineCaption = root.querySelector("[data-pdf-inline-caption]");
+    const thumbsWrap = root.querySelector("[data-pdf-thumbs]");
+
+    const lightbox = root.querySelector("[data-pdf-lightbox]");
+    const lightboxCanvas = root.querySelector("[data-pdf-lightbox-canvas]");
+    const docTabs = root.querySelector("[data-pdf-doc-tabs]");
+    const captionEl = root.querySelector("[data-pdf-caption]");
+    const statusEl = root.querySelector("[data-pdf-status]");
+    const prevBtn = root.querySelector("[data-pdf-prev]");
+    const nextBtn = root.querySelector("[data-pdf-next]");
+    const closeButtons = root.querySelectorAll("[data-pdf-close]");
+
+    const state = ensurePdfState(root, documents);
+    state.previewRoots.add(root);
+
+    function updateThumbStates() {
+      const thumbs = root.querySelectorAll(".pdf-preview__thumb");
+      thumbs.forEach((thumb, index) => {
+        thumb.classList.toggle("is-active", index === state.activeDocIndex);
+        thumb.setAttribute("aria-selected", index === state.activeDocIndex ? "true" : "false");
+      });
+    }
+
+    function updateDocTabStates() {
+      const tabs = docTabs.querySelectorAll(".pdf-lightbox__doc-tab");
+      tabs.forEach((tab, index) => {
+        tab.classList.toggle("is-active", index === state.activeDocIndex);
+      });
+    }
+
+    async function renderMainPreview() {
+      const doc = documents[state.activeDocIndex];
+      inlineCaption.textContent = doc?.caption || "";
+
+      try {
+        const pdf = await loadPdf(doc.src);
+        await renderPageToCanvas(pdf, 1, mainCanvas, 520, 700);
+      } catch (error) {
+        console.error("Main preview render failed:", error);
       }
 
-      const loadingTask = pdfjsLib.getDocument(src);
-      pdfDoc = await loadingTask.promise;
-
-      await renderTriggerPage();
-      await renderLightboxPage();
-      updateUi();
-    }
-
-    async function renderToCanvas(canvas, pageNumber, scale) {
-      if (!pdfDoc || !canvas) return;
-
-      const page = await pdfDoc.getPage(pageNumber);
-      const viewport = page.getViewport({ scale });
-      const context = canvas.getContext("2d");
-      const ratio = window.devicePixelRatio || 1;
-
-      canvas.width = Math.floor(viewport.width * ratio);
-      canvas.height = Math.floor(viewport.height * ratio);
-      canvas.style.width = `${viewport.width}px`;
-      canvas.style.height = `${viewport.height}px`;
-
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-      renderTask = page.render({
-        canvasContext: context,
-        viewport
-      });
-
-      await renderTask.promise;
-    }
-
-    async function renderTriggerPage() {
-      await renderToCanvas(triggerCanvas, 1, 0.72);
+      updateThumbStates();
     }
 
     async function renderLightboxPage() {
-      await renderToCanvas(lightboxCanvas, currentPage, 0.9);
+      if (!state.activePdf) return;
+
+      const wrap = lightboxCanvas.closest(".pdf-lightbox__canvas-wrap");
+      const availableWidth = Math.max(300, wrap.clientWidth - 32);
+      const availableHeight = Math.max(300, wrap.clientHeight - 32);
+
+      await renderPageToCanvas(
+        state.activePdf,
+        state.activePage,
+        lightboxCanvas,
+        availableWidth,
+        availableHeight
+      );
+
+      statusEl.textContent = `Page ${state.activePage} of ${state.activePdf.numPages}`;
+      captionEl.textContent = documents[state.activeDocIndex]?.caption || "";
+
+      prevBtn.disabled = state.activePage <= 1;
+      nextBtn.disabled = state.activePage >= state.activePdf.numPages;
     }
 
-    function updateUi() {
-      if (!pdfDoc) return;
+    async function setActiveDocument(index, preserveLightbox = false) {
+      state.activeDocIndex = index;
+      state.activePage = 1;
+      state.activePdf = await loadPdf(documents[state.activeDocIndex].src);
 
-      if (pageStatus) {
-        pageStatus.textContent = `Page ${currentPage} of ${pdfDoc.numPages}`;
+      await renderMainPreview();
+      updateDocTabStates();
+
+      if (preserveLightbox || state.isLightboxOpen) {
+        await renderLightboxPage();
+      }
+    }
+
+    function renderDocTabs() {
+      docTabs.innerHTML = "";
+
+      documents.forEach((doc, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "pdf-lightbox__doc-tab";
+        if (index === state.activeDocIndex) button.classList.add("is-active");
+        button.textContent = doc.label;
+
+        button.addEventListener("click", async () => {
+          broadcastDocumentChange(previewId, index);
+          await setActiveDocument(index, true);
+        });
+
+        docTabs.appendChild(button);
+      });
+    }
+
+    async function renderThumb(doc, index) {
+      if (!thumbsWrap) return;
+
+      const thumbBtn = document.createElement("button");
+      thumbBtn.type = "button";
+      thumbBtn.className = "pdf-preview__thumb";
+      thumbBtn.dataset.docIndex = String(index);
+      thumbBtn.setAttribute("role", "tab");
+      thumbBtn.setAttribute("aria-selected", index === state.activeDocIndex ? "true" : "false");
+
+      const thumbCanvas = document.createElement("canvas");
+      thumbCanvas.className = "pdf-preview__thumb-canvas";
+
+      const thumbLabel = document.createElement("span");
+      thumbLabel.className = "pdf-preview__thumb-label";
+      thumbLabel.textContent = doc.label;
+
+      thumbBtn.appendChild(thumbCanvas);
+      thumbBtn.appendChild(thumbLabel);
+
+      thumbBtn.addEventListener("click", async () => {
+        broadcastDocumentChange(previewId, index);
+        await setActiveDocument(index);
+      });
+
+      thumbsWrap.appendChild(thumbBtn);
+
+      try {
+        const pdf = await loadPdf(doc.src);
+        await renderPageToCanvas(pdf, 1, thumbCanvas, 140, 180);
+      } catch (error) {
+        console.error("Thumbnail render failed:", error);
+      }
+    }
+
+    async function openLightbox() {
+      state.isLightboxOpen = true;
+      lightbox.hidden = false;
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+
+      if (!state.activePdf) {
+        state.activePdf = await loadPdf(documents[state.activeDocIndex].src);
       }
 
-      if (prevButton) prevButton.disabled = currentPage <= 1;
-      if (nextButton) nextButton.disabled = currentPage >= pdfDoc.numPages;
-
-      tabs.forEach((tab) => {
-        const isActive = tab.getAttribute("data-src") === currentSrc;
-        tab.classList.toggle("is-active", isActive);
-        tab.setAttribute("aria-selected", isActive ? "true" : "false");
-
-        if (isActive) {
-          const caption = tab.getAttribute("data-caption") || "";
-          if (captionEl) captionEl.textContent = caption;
-          if (inlineCaption) inlineCaption.textContent = caption;
-        }
-      });
-    }
-
-    function openLightbox() {
-      if (!lightbox) return;
-      lightbox.hidden = false;
-      requestAnimationFrame(() => {
-        lightbox.classList.add("is-open");
-      });
-      
+      await renderLightboxPage();
     }
 
     function closeLightbox() {
-      if (!lightbox) return;
+      state.isLightboxOpen = false;
       lightbox.classList.remove("is-open");
-      window.setTimeout(() => {
-        lightbox.hidden = true;
-      }, 220);
+      lightbox.setAttribute("aria-hidden", "true");
+      lightbox.hidden = true;
     }
 
-    openButton?.addEventListener("click", openLightbox);
+    trigger?.addEventListener("click", openLightbox);
 
     closeButtons.forEach((button) => {
       button.addEventListener("click", closeLightbox);
     });
 
-    prevButton?.addEventListener("click", async () => {
-      if (!pdfDoc || currentPage <= 1) return;
-      currentPage -= 1;
+    prevBtn?.addEventListener("click", async () => {
+      if (!state.activePdf || state.activePage <= 1) return;
+      state.activePage -= 1;
       await renderLightboxPage();
-      updateUi();
     });
 
-    nextButton?.addEventListener("click", async () => {
-      if (!pdfDoc || currentPage >= pdfDoc.numPages) return;
-      currentPage += 1;
+    nextBtn?.addEventListener("click", async () => {
+      if (!state.activePdf || state.activePage >= state.activePdf.numPages) return;
+      state.activePage += 1;
       await renderLightboxPage();
-      updateUi();
     });
 
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", async () => {
-        const src = tab.getAttribute("data-src");
-        await loadDocument(src);
-      });
+    document.addEventListener("pdf-preview:set-document", async (event) => {
+      const { previewId: targetId, index } = event.detail || {};
+      if (targetId !== previewId) return;
+      if (index === state.activeDocIndex) return;
+      await setActiveDocument(index, state.isLightboxOpen);
     });
 
-    document.addEventListener("keydown", async (event) => {
-      if (!lightbox || lightbox.hidden) return;
+    window.addEventListener("keydown", async (event) => {
+      if (!state.isLightboxOpen) return;
 
       if (event.key === "Escape") {
         closeLightbox();
-      } else if (event.key === "ArrowLeft" && pdfDoc && currentPage > 1) {
-        currentPage -= 1;
+      }
+
+      if (event.key === "ArrowLeft" && state.activePage > 1) {
+        state.activePage -= 1;
         await renderLightboxPage();
-        updateUi();
-      } else if (event.key === "ArrowRight" && pdfDoc && currentPage < pdfDoc.numPages) {
-        currentPage += 1;
+      }
+
+      if (event.key === "ArrowRight" && state.activePdf && state.activePage < state.activePdf.numPages) {
+        state.activePage += 1;
         await renderLightboxPage();
-        updateUi();
       }
     });
 
-    loadDocument(currentSrc);
+    window.addEventListener("resize", async () => {
+      if (state.isLightboxOpen) {
+        await renderLightboxPage();
+      }
+    });
+
+    renderDocTabs();
+
+    if (thumbsWrap) {
+      documents.forEach((doc, index) => {
+        renderThumb(doc, index);
+      });
+    }
+
+    setActiveDocument(0);
   }
 
-  document.querySelectorAll("[data-pdf-preview]").forEach((root) => {
-    initPdfPreview(root);
-  });
+  function initAllPdfPreviews() {
+    document.querySelectorAll("[data-pdf-preview]").forEach(initPdfPreview);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAllPdfPreviews, { once: true });
+  } else {
+    initAllPdfPreviews();
+  }
 </script>

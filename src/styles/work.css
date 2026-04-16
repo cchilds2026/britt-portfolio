@@ -1,0 +1,54 @@
+/* =========================
+   Work page
+========================= */
+.work-page-intro {
+  padding-top: 2.25rem;
+  padding-bottom: 1rem;
+}
+
+.work-page-intro .display {
+  margin-bottom: 0.75rem;
+}
+
+.work-page-intro .lead {
+  max-width: 52rem;
+}
+
+.work-grid-section {
+  padding-top: 1rem;
+}
+
+/* Work page cards */
+.work-grid-section .grid-3 {
+  align-items: stretch;
+}
+
+.work-grid-section .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.work-grid-section .frame {
+  width: 100%;
+}
+
+.work-grid-section .frame img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.work-grid-section .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.work-grid-section .card-body p {
+  max-width: none;
+}
+
+.work-grid-section .frame img.project-image--signage-focus {
+  object-position: 0% center;
+}
