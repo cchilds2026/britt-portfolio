@@ -1,98 +1,250 @@
 /* =========================
-   Home page
+   Case study pages
 ========================= */
-.home-page-intro {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.home-page-intro .display {
-  margin-bottom: 0.55rem;
-}
-
-.home-page-intro .lead {
-  max-width: 42rem;
-}
-
-.home-page-intro .frame {
-  max-height: 420px;
-}
-
-.home-page-intro .frame img {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-}
-
-.home-feature-section {
+.branding-split-section {
   padding-top: 0;
-  padding-bottom: 1.25rem;
-  gap: 1.25rem;
+  padding-bottom: 2rem;
+}
+
+.branding-split-section--second {
+  padding-top: 0;
+}
+
+.branding-case-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 1rem 1.35rem;
   align-items: start;
 }
 
-.home-feature-section .frame {
-  max-height: 330px;
+.branding-case-grid--reverse {
+  grid-template-columns: 1.08fr 0.92fr;
 }
 
-.home-feature-section .frame img {
+.branding-case-copy {
+  max-width: 36rem;
+}
+
+.branding-case-copy p {
+  max-width: 56ch;
+  margin: 0 0 1rem;
+}
+
+.branding-case-preview {
+  display: contents;
+}
+
+.branding-case-preview .image-carousel {
+  display: contents;
+}
+
+.branding-case-preview .carousel-split-main {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   width: 100%;
-  height: 330px;
+  max-width: 56ch;
+  margin-left: auto;
+  align-self: start;
+}
+
+.branding-case-preview .carousel-thumbs--split {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  max-width: 56ch;
+  margin-top: 0.15rem;
+}
+
+.branding-case-grid--reverse .branding-case-preview .carousel-split-main {
+  grid-column: 1;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.branding-case-grid--reverse .branding-case-preview .carousel-thumbs--split {
+  grid-column: 2;
+  justify-self: start;
+}
+
+.branding-case-grid--reverse
+  .branding-case-preview
+  [data-carousel="school-signage-preview"]
+  .carousel-thumbs--split {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+}
+
+.branding-case-preview .carousel-main-image--preview {
+  width: 100%;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
 }
 
-.home-feature-copy p {
+/* Case study top sections */
+.branding-top-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 56ch) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.branding-top-copy {
+  max-width: none;
+}
+
+.branding-top-copy .lead {
+  margin-bottom: 2rem;
+}
+
+.branding-top-meta {
+  max-width: 34rem;
+}
+
+.branding-top-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: 100%;
   max-width: 48ch;
+  margin-left: 0;
+  margin-right: 0;
+  order: -1;
 }
 
-.home-projects-section {
-  padding-top: 0;
-  padding-bottom: 2.75rem;
+.branding-top-image {
+  overflow: hidden;
 }
 
-.home-projects-section .grid-3 {
-  gap: 1.75rem;
-  align-items: stretch;
+.branding-top-image img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
 }
 
-.home-projects-section .card {
-  display: flex;
-  min-height: 100%;
+.continue-exploring-section {
+  padding-top: 3rem;
+}
+
+/* Branding page thumbnail layouts */
+[data-carousel="branding-guide-process-preview"] .carousel-split-main {
+  max-width: 56ch;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-main-image--preview {
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+[data-carousel="branding-environment-preview"] .carousel-thumbs--split,
+[data-carousel="branding-sensory-hallway-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+[data-carousel="branding-guide-process-preview"] .carousel-thumb img,
+[data-carousel="branding-environment-preview"] .carousel-thumb img,
+[data-carousel="branding-sensory-hallway-preview"] .carousel-thumb img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.branding-case-preview .carousel-thumbs--split .carousel-thumb {
   transform: none;
 }
 
-.home-projects-section .card:hover {
-  transform: translateY(-2px);
+.branding-case-preview .carousel-thumbs--split .carousel-thumb:hover,
+.branding-case-preview .carousel-thumbs--split .carousel-thumb.is-active {
+  transform: translateY(-1px);
 }
 
-.home-project-card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+/* Athletics & signage page thumbnail layouts */
+[data-carousel="athletics-graphics-preview"] .carousel-split-main {
+  max-width: 56ch;
+}
+
+[data-carousel="athletics-graphics-preview"] .carousel-main-image--preview {
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="athletics-graphics-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: -0.15rem;
+}
+
+[data-carousel="school-signage-preview"] .carousel-split-main {
+  max-width: 48ch;
+}
+
+[data-carousel="school-signage-preview"] .carousel-main-image--preview {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #f3ede4;
+}
+
+[data-carousel="school-signage-preview"] .carousel-thumbs--split {
+  grid-column: 1 / -1;
+  grid-row: 2;
   width: 100%;
-  padding: 2rem 1.9rem 1.85rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.home-project-card-body .meta {
-  margin: 0 0 0.45rem;
-}
-
-.home-project-card-body .project-title {
-  margin: 0 0 1rem;
-  line-height: 1.12;
-}
-
-.home-project-card-body p {
   max-width: none;
-  margin: 0;
-  line-height: 1.55;
+  justify-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 3rem;
+  padding-top: 5rem;
 }
 
-.home-process-section {
-  padding-top: 0.5rem;
+[data-carousel="athletics-graphics-preview"] .carousel-thumb img,
+[data-carousel="school-signage-preview"] .carousel-thumb img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-split-main {
+  max-width: 68ch;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-preview {
+  background: #e7e4de;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-main-image--preview {
+  aspect-ratio: 21 / 8;
+  object-fit: contain;
+  background: #e7e4de;
+  padding: 1rem;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumbs--split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumb {
+  background: #e7e4de;
+}
+
+[data-carousel="accessibility-signage-preview"] .carousel-thumb img {
+  aspect-ratio: 21 / 8;
+  object-fit: contain;
+  background: #e7e4de48;
+  padding: 0.35rem;
 }

@@ -20,6 +20,7 @@
   flex-direction: column;
   gap: 0.8rem;
   min-width: 0;
+  height: 100%;
 }
 
 .award-header {
@@ -59,10 +60,50 @@
   max-width: none;
 }
 
+.award-preview .carousel-preview,
+.award-preview .pdf-preview__trigger-inner {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+}
+
 .award-preview .carousel-main-image--preview {
   width: 100%;
+  height: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+}
+
+.award-preview .pdf-preview {
+  max-width: none;
+  margin-left: 0;
+}
+
+.award-preview .pdf-preview__trigger {
+  padding: 0;
+}
+
+.award-preview .pdf-preview__trigger-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 20px;
+  background: #efe7dc;
+  overflow: hidden;
+}
+
+.award-preview .pdf-preview__trigger-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.award-preview .pdf-preview__thumbs,
+.award-preview .pdf-preview__inline-caption {
+  display: none;
 }
 
 .award-ribbon-badge {
@@ -91,6 +132,7 @@
 .award-copy {
   padding: 0 0.25rem;
   text-align: center;
+  margin-top: auto;
 }
 
 .award-copy .project-title {
@@ -109,4 +151,12 @@
 
 .award-link:hover {
   opacity: 0.75;
+}
+
+.award-status {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 0.98rem;
+  color: var(--muted);
+  text-align: center;
 }

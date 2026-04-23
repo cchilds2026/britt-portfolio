@@ -1,275 +1,273 @@
 /* =========================
-   PDF preview
+   Image Carousel
 ========================= */
-.pdf-preview {
-  width: 100%;
-  max-width: 56ch;
-  margin-left: auto;
+.image-carousel {
+  max-width: 980px;
 }
 
-.pdf-preview__trigger {
+.carousel-stage {
   position: relative;
-  display: block;
-  width: 100%;
-  padding: 1.2rem;
-  cursor: zoom-in;
-  text-align: left;
 }
 
-.pdf-preview__trigger-inner {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background: #f3ede4;
-  border-radius: 14px;
-  padding: 0.5rem;
+.carousel-preview {
   overflow: hidden;
 }
 
-.pdf-preview__trigger-canvas {
+.carousel-image-button {
   display: block;
   width: 100%;
-  height: auto;
-  background: #fff;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
 }
 
-.pdf-preview__overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: end;
-  justify-content: flex-start;
-  padding: 1rem;
-  background: linear-gradient(
-    to top,
-    rgba(31, 27, 24, 0.16) 0%,
-    rgba(31, 27, 24, 0.03) 30%,
-    rgba(31, 27, 24, 0) 65%
-  );
-  opacity: 0.92;
+.carousel-image-button--preview {
+  cursor: zoom-in;
+}
+
+.carousel-main-image,
+.carousel-lightbox-image {
   transition: opacity 0.22s ease;
-  pointer-events: none;
 }
 
-.pdf-preview__trigger:hover .pdf-preview__overlay,
-.pdf-preview__trigger:focus-visible .pdf-preview__overlay {
-  opacity: 1;
+.is-fading {
+  opacity: 0.35;
 }
 
-.pdf-preview__overlay-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.48rem 0.78rem;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
+.carousel-caption,
+.carousel-lightbox-caption {
+  transition: opacity 0.2s ease;
+}
+
+.carousel-main-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.carousel-main-image--preview {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.carousel-arrow,
+.carousel-lightbox-arrow,
+.carousel-lightbox-close {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
   color: var(--text);
-  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.carousel-arrow:hover,
+.carousel-lightbox-arrow:hover,
+.carousel-lightbox-close:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  font-size: 1.6rem;
   line-height: 1;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
-.pdf-preview__inline-caption {
-  margin: 0.75rem 0 0;
+.carousel-arrow:hover {
+  transform: translateY(-50%) translateY(-1px);
+}
+
+.carousel-arrow--prev {
+  left: 1rem;
+}
+
+.carousel-arrow--next {
+  right: 1rem;
+}
+
+.carousel-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+  margin-top: 0.9rem;
+  color: var(--muted);
+}
+
+.carousel-count {
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.carousel-caption {
   max-width: 56ch;
+  text-align: right;
+  font-size: 0.95rem;
 }
 
-.pdf-preview__thumbs {
+.carousel-thumbs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
   gap: 0.75rem;
-  margin-top: 0.85rem;
+  margin-top: 1rem;
 }
 
-.pdf-lightbox[hidden] {
+.carousel-thumb {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  opacity: 0.72;
+  transition:
+    opacity 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.carousel-thumb:hover,
+.carousel-thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.carousel-thumb img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.carousel-lightbox[hidden] {
   display: none;
 }
 
-.pdf-lightbox {
+.carousel-lightbox {
   position: fixed;
   inset: 0;
   z-index: 1000;
+  background: rgba(12, 10, 9, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.22s ease;
+  transition: opacity 0.3s ease;
 }
 
-.pdf-lightbox.is-open {
+.carousel-lightbox.is-open {
   opacity: 1;
   pointer-events: auto;
 }
 
-.pdf-lightbox__backdrop {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  background: rgba(12, 10, 9, 0.92);
-  cursor: pointer;
+.carousel-lightbox-shell {
+  width: min(1400px, 100%);
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 64px;
+  align-items: center;
+  gap: 1rem;
+  transform: translateY(14px) scale(0.985);
+  opacity: 0;
+  transition: transform 0.26s ease, opacity 0.26s ease;
 }
 
-.pdf-lightbox__dialog {
-  position: absolute;
-  inset: 1.25rem;
+.carousel-lightbox.is-open .carousel-lightbox-shell {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.carousel-lightbox-content {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-  padding: 1.1rem;
-  border-radius: 24px;
-  background: #f6f2eb;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-  overflow: hidden;
-}
-
-.pdf-lightbox__close {
-  position: absolute;
-  top: 0.9rem;
-  right: 0.9rem;
-  z-index: 2;
-  appearance: none;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--text);
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  font-size: 1.6rem;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    transform 0.22s ease,
-    border-color 0.22s ease,
-    background-color 0.22s ease;
-}
-
-.pdf-lightbox__close:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.96);
-}
-
-.pdf-lightbox__topbar {
-  flex: 0 0 auto;
-  padding-right: 3.5rem;
-  margin-bottom: 0.9rem;
-}
-
-.pdf-lightbox__doc-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.pdf-lightbox__doc-tab {
-  appearance: none;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--muted);
-  border-radius: 999px;
-  padding: 0.42rem 0.72rem;
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition:
-    color 0.22s ease,
-    border-color 0.22s ease,
-    background-color 0.22s ease,
-    transform 0.22s ease;
-}
-
-.pdf-lightbox__doc-tab:hover,
-.pdf-lightbox__doc-tab.is-active {
-  color: var(--text);
-  border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.72);
-  transform: translateY(-1px);
-}
-
-.pdf-lightbox__viewer {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) 56px;
+  align-items: center;
   gap: 0.9rem;
-  align-items: center;
-}
-
-.pdf-lightbox__canvas-wrap {
   min-width: 0;
-  min-height: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #eee7dc;
-  border-radius: 18px;
-  padding: 1rem;
-  overflow: auto;
 }
 
-.pdf-lightbox__canvas {
+.carousel-lightbox-image-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-lightbox-image {
   display: block;
   width: auto;
-  max-width: 100%;
-  max-height: 100%;
   height: auto;
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 12px;
   background: #fff;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
-.pdf-lightbox__nav {
+.carousel-lightbox-caption {
+  color: #f3ece3;
+  text-align: center;
+  max-width: 72ch;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.carousel-lightbox-arrow,
+.carousel-lightbox-close {
   appearance: none;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--text);
-  width: 56px;
-  height: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #f3ece3;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.carousel-lightbox-arrow:hover,
+.carousel-lightbox-close:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.carousel-lightbox-arrow {
+  width: 64px;
+  height: 64px;
   border-radius: 999px;
   font-size: 2rem;
   line-height: 1;
-  cursor: pointer;
-  transition:
-    transform 0.22s ease,
-    border-color 0.22s ease,
-    background-color 0.22s ease;
-}
-
-.pdf-lightbox__nav:hover:not(:disabled) {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.96);
-}
-
-.pdf-lightbox__nav:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.pdf-lightbox__footer {
-  flex: 0 0 auto;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-top: 0.9rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.pdf-lightbox__status {
-  flex: 0 0 auto;
-  color: var(--muted);
-  font-size: 0.92rem;
-  white-space: nowrap;
-}
-
-.pdf-lightbox__caption {
-  margin: 0;
-  max-width: 60ch;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.45;
-  text-align: right;
+.carousel-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  font-size: 1.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

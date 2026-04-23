@@ -4,6 +4,7 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import RevealScript from "../components/RevealScript.astro";
 import ImageCarousel from "../components/ImageCarousel.astro";
+import PdfPreview from "../components/PdfPreview.astro";
 
 const awards = [
   {
@@ -12,14 +13,17 @@ const awards = [
     agency: "NSPRA",
     logo: "/NSPRA-Logo.png",
     ribbon: "/nspra-ribbon.png",
-    url: "[AWARD_PAGE_URL_1]",
-    previewImages: [
+    url: "https://www.nspra.org/Awards/Award-Winners/2022-Publications-and-Digital-Media-Excellence-Winners#special:~:text=Cattaraugus%2DAllegany%20BOCES%2C%20Olean%2C%20New%20York%C2%A0%C2%A0%C2%A0%C2%A0%20I%C2%A0%C2%A0%C2%A0%C2%A0%C2%A0CA%20BOCES%20CTE%20Onboarding%20Booklet%20%2D%20Designer%3A%20Brittany%20Campbell%C2%A0%C2%A0%C2%A0%C2%A0%C2%A0%20I%C2%A0%C2%A0%C2%A0%20Submitted%20by%3A%20Jessica%20Golley%2C%20Marketing%2C%20Brand%20%26%20Communication%20Coordinator",
+    previewType: "pdf",
+    previewDocs: [
       {
-        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+1",
-        alt: "Preview of awarded design piece 1",
-        caption: "This piece was recognized for its strong visual communication, thoughtful hierarchy, and polished execution within an educational design context."
+        src: "/pdf/Onboarding_Book.pdf",
+        label: "Award Entry",
+        caption:
+          "This onboarding handbook was designed for new employees with BOCES CTE programs. Nominated for excellence in Special Purpose Education."
       }
-    ]
+    ],
+    previewImages: []
   },
   {
     title: "2023 NSPRA Award for Excellence in Special Purpose Education",
@@ -27,12 +31,15 @@ const awards = [
     agency: "NSPRA",
     logo: "/NSPRA-Logo.png",
     ribbon: "/nspra-ribbon.png",
-    url: "[AWARD_PAGE_URL_2]",
+    url: "https://www.nspra.org/Awards/Award-Winners/2023-Publications-and-Digital-Media-Excellence-Winners#:~:text=Cattaraugus%2DAllegany%20BOCES%2C%20Olean%2C%20New%20York%0ASubmitted%20by%3A%20Jessica%20Golley%2C%20Marketing%2C%20Brand%20%26%20Communication%20Coordinator%0AAward%20Entry%3A%0AHinsdale%20Main%20Entrance%20Design%20%2D%20Brittany%20Childs",
+    previewType: "image",
+    previewDocs: [],
     previewImages: [
       {
-        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+2",
+        src: "/images/awards/award-02-3.JPG",
         alt: "Preview of awarded design piece 2",
-        caption: "This design was recognized for combining clarity, brand consistency, and effective communication in a format built for real-world institutional use."
+        caption:
+          "This graphic was designed for the entrance door to Hinsdale Central School. Nominated for excellence in Special Purpose Education."
       }
     ]
   },
@@ -42,12 +49,15 @@ const awards = [
     agency: "NYSPRA",
     logo: "/NYSPRA-Logo.png",
     ribbon: "/NYSPRA-ribbon.png",
-    url: "[AWARD_PAGE_URL_3]",
+    url: "/pdf/44th-nyspra-awards-contest-winners.pdf#page=2&search=Childs",
+    previewType: "image",
+    previewDocs: [],
     previewImages: [
       {
-        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+3",
+        src: "/images/awards/award-02-3.JPG",
         alt: "Preview of awarded design piece 3",
-        caption: "The work was recognized for its balance of visual refinement, readability, and strong alignment with its intended audience and setting."
+        caption:
+          "This graphic was designed for the entrance door to Hinsdale Central School. Nominated for excellence in Special Purpose Education."
       }
     ]
   },
@@ -56,14 +66,19 @@ const awards = [
     year: "2025",
     agency: "NSPRA",
     logo: "/NSPRA-Logo.png",
-    url: "[AWARD_PAGE_URL_4]",
-    previewImages: [
+    ribbon: "",
+    url: "",
+    label: "Pending announcement of winners",
+    previewType: "pdf",
+    previewDocs: [
       {
-        src: "https://placehold.co/900x1200/e9e1d7/1f1b18?text=Awarded+Piece+4",
-        alt: "Preview of awarded design piece 4",
-        caption: "This piece was awarded for its thoughtful composition, effective messaging, and high level of craft across both design and production details."
+        src: "/pdf/Admin-02.pdf",
+        label: "Nominated Entry",
+        caption:
+          "This Student Code of Conduct manual was designed for Franklinville Central School/Ten Broeck Academy. Nominated for excellence in Special Purpose Education, announcement of awards pending."
       }
-    ]
+    ],
+    previewImages: []
   }
 ];
 ---
@@ -153,11 +168,18 @@ const awards = [
 
             <div class="award-preview-wrap">
               <div class="award-preview">
-                <ImageCarousel
-                  images={award.previewImages}
-                  id={`award-preview-${index}`}
-                  mode="splitPreview"
-                />
+                {award.previewType === "pdf" ? (
+                  <PdfPreview
+                    id={`award-preview-${index}`}
+                    documents={award.previewDocs ?? []}
+                  />
+                ) : (
+                  <ImageCarousel
+                    images={award.previewImages ?? []}
+                    id={`award-preview-${index}`}
+                    mode="splitPreview"
+                  />
+                )}
               </div>
 
               {award.ribbon && (
@@ -173,14 +195,21 @@ const awards = [
 
             <div class="award-copy">
               <h3 class="project-title">{award.title}</h3>
-              <a
-                class="award-link"
-                href={award.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Award Listing
-              </a>
+
+              {award.url ? (
+                <a
+                  class="award-link"
+                  href={award.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Award Listing
+                </a>
+              ) : (
+                <div class="award-status">
+                  {award.label || "Pending announcement of winners"}
+                </div>
+              )}
             </div>
           </article>
         ))}

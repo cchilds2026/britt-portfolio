@@ -9,78 +9,66 @@ import PdfPreviewThumbs from "../../components/PdfPreviewThumbs.astro";
 const publicationDocs = [
   {
     src: "/pdf/Newsletter-01.pdf",
-    label: "Issue 1",
-    caption:
-      "Recurring publication materials designed for clarity, structure, and institutional communication."
+    label: "CLV Newsletter",
+    caption: "September/October 2025 Issue of Cattaraugus- Little Valley's district newsletter."
   },
   {
     src: "/pdf/Newsletter-02.pdf",
-    label: "Issue 2",
-    caption:
-      "Editorial layouts built for readability, pacing, and organized communication."
+    label: "BRCS Newsletter",
+    caption: "March 2026 Issue of Bolivar-Richburg's distric newsletter."
   },
   {
     src: "/pdf/Newsletter-03.pdf",
-    label: "Issue 3",
-    caption:
-      "Publication design shaped by hierarchy, consistency, and readable page flow."
+    label: "PVCS Newsletter",
+    caption: "October 2025 Issue of Pine Valley Central School's district newsletter."
   },
   {
     src: "/pdf/Newsletter-04.pdf",
-    label: "Issue 4",
-    caption:
-      "A newsletter example showing recurring communication handled through a consistent editorial system."
+    label: "WCSD Newsletter",
+    caption: "October 2025 Issue of Wellsville Central School's newsletter 'The Overview'"
   }
 ];
 
 const planningDocs = [
   {
     src: "/pdf/Admin-01.pdf",
-    label: "Admin 1",
-    caption:
-      "Administrative publication work designed for structure, hierarchy, and practical use."
+    label: "BOCES Ben Book",
+    caption: "Cover design for CABOCES Salary & Benefit Data Book designed for Employee reference. Published by Human Resources."
   },
   {
     src: "/pdf/Admin-02.pdf",
-    label: "Admin 2",
-    caption:
-      "Long-form organizational material built for readability and repeated reference."
+    label: "FCSD COC",
+    caption: "Franklinville Central School Code of Conduct. Redesigned from inaccessible text to new production copy. Nominated for 2025 NSPRA Award for Special Purpose Communication in Education. Award winners pending announcement."
   },
   {
     src: "/pdf/Admin-03.pdf",
-    label: "Admin 3",
-    caption:
-      "Administrative documents organized for clarity, pacing, and usability."
+    label: "CABOCES COC",
+    caption: "Student Code of Conduct for CABOCES CTE Program. Cover designed by Brittany Childs, contents contributed by other designers."
   },
   {
     src: "/pdf/Calendar-01.pdf",
-    label: "Calendar 1",
-    caption:
-      "Calendar design organized for clarity, pacing, and everyday usability."
+    label: "WCSD Calendar",
+    caption: "Wellsville School Calendar for 2023-2024. Serves as calendar mailed to the district as well as resources for families with students in the district."
   },
   {
     src: "/pdf/Calendar-04.pdf",
-    label: "Calendar 4",
-    caption:
-      "Calendar and planning material structured for repeated reference."
+    label: "CLV Calendar",
+    caption: "Cattaraugus-Little Valley School Calendar for 2023-2024. Serves as calendar mailed to the district as well as resources for families with students in the district."
   },
   {
     src: "/pdf/Calendar-05.pdf",
-    label: "Calendar 5",
-    caption:
-      "A planning example showing layout systems built for practical use."
+    label: "PVCS Calendar",
+    caption: "Pine Valley School Calendar for 2024-2025. Serves as calendar mailed to the district as well as resources for families with students in the district."
   },
   {
     src: "/pdf/Planner-01.pdf",
-    label: "Planner 1",
-    caption:
-      "Planner and organizational layouts designed to support navigation and routine use."
+    label: "BRCS Employee Planner",
+    caption: "Monthly Planner Designed for BRCS Faculty and Staff. "
   },
   {
     src: "/pdf/Planner-02.pdf",
-    label: "Planner 2",
-    caption:
-      "Planning materials built around function, consistency, and usability."
+    label: "CABOCES Planner",
+    caption: "Monthly Planner designed for CABOCES. Distributed to students and faculty/staff in the CTE Programs. Cover deisgned by Brittany Childs, contents contributed by other designers."
   }
 ];
 
@@ -88,38 +76,32 @@ const specialPrintDocs = [
   {
     src: "/pdf/Brochure-01.pdf",
     label: "Brochure",
-    caption:
-      "Brochure work showing editorial structure applied to smaller-format print communication."
+    caption: "Brochure work showing editorial structure applied to smaller-format print communication."
   },
   {
     src: "/pdf/Cards-01.pdf",
-    label: "Card 1",
-    caption:
-      "Special print pieces designed with the same attention to tone, craft, and communication."
+    label: "CABOCES Cards",
+    caption: "Various greeting cards designed for CABOCES. Intended to be sent to employees for special occasions."
   },
   {
     src: "/pdf/Flyer-02.pdf",
-    label: "Flyer 2",
-    caption:
-      "A print example showing how hierarchy and pacing still matter in shorter-form formats."
+    label: "CABOCES Flyer",
+    caption: "Summer recruitment flyer for CABOCES Workforce Development Program."
   },
   {
     src: "/pdf/Flyer-03.pdf",
-    label: "Flyer 3",
-    caption:
-      "Smaller-format communication designed to be clear, polished, and easy to scan."
+    label: "CABOCES Flyer",
+    caption: "Summer recruitment flyer for CABOCES Workforce Development Program."
   },
   {
     src: "/pdf/Flyer-04.pdf",
-    label: "Flyer 4",
-    caption:
-      "Print communication shaped by concise hierarchy and strong visual organization."
+    label: "Rise ",
+    caption: "Employee Wellness Program flyer for RISE Academy."
   },
   {
     src: "/pdf/Stickers-01.pdf",
-    label: "Stickers",
-    caption:
-      "Graphic print work showing how branding and communication can extend into smaller supporting materials."
+    label: "CABOCES Stickers",
+    caption: "Thank you stickers designed for BOCES Admin team. Printed 1.5\" diamter and used on envelopes and gifts for employee recognition."
   }
 ];
 ---
@@ -135,9 +117,10 @@ const specialPrintDocs = [
       <div class="editorial-top-grid">
         <div class="editorial-top-media reveal">
           <div class="frame editorial-top-frame">
-            <img
+           <img
               src="/images/editorial-publications/COC-01.png"
-              alt="Editorial and publications overview"
+              alt="Cover photo of Franklinville Central School District Code of Conduct. Features school logo and colors, as well as photos taken of students during the school year."
+              data-label="Code of Conduct Cover FVL"
             />
           </div>
         </div>

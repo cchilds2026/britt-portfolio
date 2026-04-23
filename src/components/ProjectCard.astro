@@ -6,8 +6,9 @@ const { project } = Astro.props;
   <div class="frame">
     <img
       src={project.image}
-      alt={project.title}
+      alt={project.imageAlt ?? project.title}
       class={project.imageClass}
+      data-label={project.imageLabel ?? undefined}
     />
   </div>
   <div class="card-body">
