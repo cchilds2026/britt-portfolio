@@ -19,59 +19,6 @@ const serializedDocuments = JSON.stringify(documents);
 </div>
 
 <script type="module">
-  const MOBILE_MEDIA = "(max-width: 768px)";
-  let pdfjsPromise = null;
-
-  function isMobileView() {
-    return window.matchMedia(MOBILE_MEDIA).matches;
-  }
-
-  async function getPdfJs() {
-    if (!pdfjsPromise) {
-      pdfjsPromise = import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs")
-        .then((pdfjsLib) => {
-          pdfjsLib.GlobalWorkerOptions.workerSrc =
-            "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
-          return pdfjsLib;
-        });
-    }
-
-    return pdfjsPromise;
-  }
-
-  async function loadPdf(url) {
-    const pdfjsLib = await getPdfJs();
-    const loadingTask = pdfjsLib.getDocument(url);
-    return await loadingTask.promise;
-  }
-
-  async function renderPageToCanvas(pdf, pageNumber, canvas, maxWidth, maxHeight) {
-    const page = await pdf.getPage(pageNumber);
-    const baseViewport = page.getViewport({ scale: 1 });
-
-    let scale = maxWidth / baseViewport.width;
-    if (maxHeight) {
-      scale = Math.min(scale, maxHeight / baseViewport.height);
-    }
-
-    const viewport = page.getViewport({ scale });
-    const context = canvas.getContext("2d");
-    const ratio = window.devicePixelRatio || 1;
-
-    canvas.width = Math.floor(viewport.width * ratio);
-    canvas.height = Math.floor(viewport.height * ratio);
-    canvas.style.width = `${viewport.width}px`;
-    canvas.style.height = `${viewport.height}px`;
-
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
-    await page.render({
-      canvasContext: context,
-      viewport
-    }).promise;
-  }
-
   function initThumbNav(root) {
     if (!root || root.dataset.pdfThumbsInitialized === "true") return;
     root.dataset.pdfThumbsInitialized = "true";
@@ -86,93 +33,43 @@ const serializedDocuments = JSON.stringify(documents);
     if (!documents.length) return;
 
     function updateActive(index) {
-      const thumbs = root.querySelectorAll(".pdf-preview__thumb");
-      thumbs.forEach((thumb, thumbIndex) => {
+      root.querySelectorAll(".pdf-preview__thumb").forEach((thumb, thumbIndex) => {
         thumb.classList.toggle("is-active", thumbIndex === index);
         thumb.setAttribute("aria-selected", thumbIndex === index ? "true" : "false");
       });
     }
 
-    async function renderDesktopThumb(doc, index) {
-      const thumbBtn = document.createElement("button");
-      thumbBtn.type = "button";
-      thumbBtn.className = "pdf-preview__thumb";
-      if (index === 0) thumbBtn.classList.add("is-active");
-      thumbBtn.setAttribute("role", "tab");
-      thumbBtn.setAttribute("aria-selected", index === 0 ? "true" : "false");
-
-      const thumbCanvas = document.createElement("canvas");
-      thumbCanvas.className = "pdf-preview__thumb-canvas";
-
-      thumbBtn.appendChild(thumbCanvas);
-
-      thumbBtn.addEventListener("click", () => {
-        updateActive(index);
-        document.dispatchEvent(
-          new CustomEvent("pdf-preview:set-document", {
-            detail: { previewId: targetId, index }
-          })
-        );
-      });
-
-      buttonsWrap.appendChild(thumbBtn);
-
-      try {
-        const pdf = await loadPdf(doc.src);
-        await renderPageToCanvas(pdf, 1, thumbCanvas, 140, 180);
-      } catch (error) {
-        console.error("Thumbnail nav render failed:", error);
-      }
-    }
-
-    function renderMobileButton(doc, index) {
-      const thumbBtn = document.createElement("button");
-      thumbBtn.type = "button";
-      thumbBtn.className = "pdf-preview__thumb pdf-preview__thumb--mobile";
-      if (index === 0) thumbBtn.classList.add("is-active");
-      thumbBtn.setAttribute("role", "tab");
-      thumbBtn.setAttribute("aria-selected", index === 0 ? "true" : "false");
-      thumbBtn.textContent = doc.label;
-
-      thumbBtn.addEventListener("click", () => {
-        updateActive(index);
-        document.dispatchEvent(
-          new CustomEvent("pdf-preview:set-document", {
-            detail: { previewId: targetId, index }
-          })
-        );
-      });
-
-      buttonsWrap.appendChild(thumbBtn);
-    }
-
-    function renderAll() {
+    function renderButtons() {
       buttonsWrap.innerHTML = "";
 
-      if (isMobileView()) {
-        documents.forEach((doc, index) => renderMobileButton(doc, index));
-      } else {
-        documents.forEach((doc, index) => {
-          renderDesktopThumb(doc, index);
+      documents.forEach((doc, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "pdf-preview__thumb pdf-preview__thumb--mobile";
+        if (index === 0) btn.classList.add("is-active");
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-selected", index === 0 ? "true" : "false");
+        btn.textContent = doc.label;
+
+        btn.addEventListener("click", () => {
+          updateActive(index);
+          document.dispatchEvent(
+            new CustomEvent("pdf-preview:set-document", {
+              detail: { previewId: targetId, index }
+            })
+          );
         });
-      }
+
+        buttonsWrap.appendChild(btn);
+      });
     }
 
-    renderAll();
+    renderButtons();
 
     document.addEventListener("pdf-preview:set-document", (event) => {
-      const { previewId, index } = event.detail || {};
-      if (previewId !== targetId) return;
-      updateActive(index);
-    });
-
-    window.addEventListener("resize", () => {
-      const currentActive =
-        Array.from(root.querySelectorAll(".pdf-preview__thumb"))
-          .findIndex((el) => el.classList.contains("is-active")) || 0;
-
-      renderAll();
-      updateActive(currentActive < 0 ? 0 : currentActive);
+      const detail = event.detail || {};
+      if (detail.previewId !== targetId) return;
+      updateActive(detail.index);
     });
   }
 

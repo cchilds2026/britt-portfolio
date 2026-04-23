@@ -1,0 +1,20 @@
+---
+const { documents = [] } = Astro.props;
+---
+
+<div class="pdf-doc-list">
+  {documents.map((doc) => (
+    <article class="pdf-doc-list__item">
+      <h3 class="pdf-doc-list__title">{doc.label}</h3>
+      <p class="pdf-doc-list__caption">{doc.caption}</p>
+      <a
+        class="pdf-doc-list__link"
+        href={doc.src}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open PDF
+      </a>
+    </article>
+  ))}
+</div>

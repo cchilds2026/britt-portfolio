@@ -5,27 +5,28 @@ import Footer from "../../components/Footer.astro";
 import RevealScript from "../../components/RevealScript.astro";
 import PdfPreview from "../../components/PdfPreview.astro";
 import PdfPreviewThumbs from "../../components/PdfPreviewThumbs.astro";
+import PdfDocumentList from "../../components/PdfDocumentList.astro";
 
 const publicationDocs = [
   {
     src: "/pdf/Newsletter-01.pdf",
     label: "CLV Newsletter",
-    caption: "September/October 2025 Issue of Cattaraugus- Little Valley's district newsletter."
+    caption: "September/October 2025 issue of Cattaraugus-Little Valley's district newsletter."
   },
   {
     src: "/pdf/Newsletter-02.pdf",
     label: "BRCS Newsletter",
-    caption: "March 2026 Issue of Bolivar-Richburg's district newsletter."
+    caption: "March 2026 issue of Bolivar-Richburg's district newsletter."
   },
   {
     src: "/pdf/Newsletter-03.pdf",
     label: "PVCS Newsletter",
-    caption: "October 2025 Issue of Pine Valley Central School's district newsletter."
+    caption: "October 2025 issue of Pine Valley Central School's district newsletter."
   },
   {
     src: "/pdf/Newsletter-04.pdf",
     label: "WCSD Newsletter",
-    caption: "October 2025 Issue of Wellsville Central School's newsletter 'The Overview'"
+    caption: "October 2025 issue of Wellsville Central School's newsletter, The Overview."
   }
 ];
 
@@ -33,12 +34,12 @@ const planningDocs = [
   {
     src: "/pdf/Admin-01.pdf",
     label: "BOCES Ben Book",
-    caption: "Cover design for CABOCES Salary & Benefit Data Book designed for Employee reference. Published by Human Resources."
+    caption: "Cover design for CABOCES Salary & Benefit Data Book designed for employee reference. Published by Human Resources."
   },
   {
     src: "/pdf/Admin-02.pdf",
     label: "FCSD COC",
-    caption: "Franklinville Central School Code of Conduct. Redesigned from inaccessible text to new production copy. Nominated for 2025 NSPRA Award for Special Purpose Communication in Education. Award winners pending announcement."
+    caption: "Franklinville Central School Code of Conduct. Redesigned from inaccessible text to new production copy. Nominated for the 2025 NSPRA Award for Special Purpose Communication in Education. Award winners pending announcement."
   },
   {
     src: "/pdf/Admin-03.pdf",
@@ -48,27 +49,27 @@ const planningDocs = [
   {
     src: "/pdf/Calendar-01.pdf",
     label: "WCSD Calendar",
-    caption: "Wellsville School Calendar for 2023-2024. Serves as calendar mailed to the district as well as resources for families with students in the district."
+    caption: "Wellsville School Calendar for 2023-2024. Serves as the calendar mailed to the district as well as a resource for families with students in the district."
   },
   {
     src: "/pdf/Calendar-04.pdf",
     label: "CLV Calendar",
-    caption: "Cattaraugus-Little Valley School Calendar for 2023-2024. Serves as calendar mailed to the district as well as resources for families with students in the district."
+    caption: "Cattaraugus-Little Valley School Calendar for 2023-2024. Serves as the calendar mailed to the district as well as a resource for families with students in the district."
   },
   {
     src: "/pdf/Calendar-05.pdf",
     label: "PVCS Calendar",
-    caption: "Pine Valley School Calendar for 2024-2025. Serves as calendar mailed to the district as well as resources for families with students in the district."
+    caption: "Pine Valley School Calendar for 2024-2025. Serves as the calendar mailed to the district as well as a resource for families with students in the district."
   },
   {
     src: "/pdf/Planner-01.pdf",
     label: "BRCS Employee Planner",
-    caption: "Monthly Planner Designed for BRCS Faculty and Staff. "
+    caption: "Monthly planner designed for BRCS faculty and staff."
   },
   {
     src: "/pdf/Planner-02.pdf",
     label: "CABOCES Planner",
-    caption: "Monthly Planner designed for CABOCES. Distributed to students and faculty/staff in the CTE Programs. Cover designed by Brittany Childs, contents contributed by other designers."
+    caption: "Monthly planner designed for CABOCES. Distributed to students and faculty/staff in the CTE programs. Cover designed by Brittany Childs, contents contributed by other designers."
   }
 ];
 
@@ -86,22 +87,22 @@ const specialPrintDocs = [
   {
     src: "/pdf/Flyer-02.pdf",
     label: "CABOCES Flyer",
-    caption: "Summer recruitment flyer for CABOCES Workforce Development Program."
+    caption: "Summer recruitment flyer for the CABOCES Workforce Development Program."
   },
   {
     src: "/pdf/Flyer-03.pdf",
     label: "CABOCES Flyer",
-    caption: "Summer recruitment flyer for CABOCES Workforce Development Program."
+    caption: "Summer recruitment flyer for the CABOCES Workforce Development Program."
   },
   {
     src: "/pdf/Flyer-04.pdf",
-    label: "Rise ",
-    caption: "Employee Wellness Program flyer for RISE Academy."
+    label: "Rise",
+    caption: "Employee wellness program flyer for RISE Academy."
   },
   {
     src: "/pdf/Stickers-01.pdf",
     label: "CABOCES Stickers",
-    caption: "Thank you stickers designed for BOCES Admin team. Printed 1.5\" diameter and used on envelopes and gifts for employee recognition."
+    caption: "Thank-you stickers designed for the BOCES Admin team. Printed at 1.5-inch diameter and used on envelopes and gifts for employee recognition."
   }
 ];
 ---
@@ -117,10 +118,12 @@ const specialPrintDocs = [
       <div class="editorial-top-grid">
         <div class="editorial-top-media reveal">
           <div class="frame editorial-top-frame">
-           <img
-              src="/images/editorial-publications/COC-01.png"
+            <img
+              src="/images/editorial-publications/COC-01.webp"
               alt="Cover photo of Franklinville Central School District Code of Conduct. Features school logo and colors, as well as photos taken of students during the school year."
               data-label="Code of Conduct Cover FVL"
+              loading="eager"
+              decoding="async"
             />
           </div>
         </div>
@@ -176,15 +179,19 @@ const specialPrintDocs = [
             printed portfolio than a set of isolated images.
           </p>
 
-          <div class="editorial-doc-nav">
+          <div class="editorial-doc-nav editorial-doc-nav--desktop">
             <PdfPreviewThumbs
               targetId="editorial-publications-preview"
               documents={publicationDocs}
             />
           </div>
+
+          <div class="editorial-doc-list editorial-doc-list--mobile">
+            <PdfDocumentList documents={publicationDocs} />
+          </div>
         </div>
 
-        <div class="branding-case-preview reveal">
+        <div class="branding-case-preview reveal editorial-preview--desktop">
           <div class="editorial-pdf-preview">
             <PdfPreview
               id="editorial-publications-preview"
@@ -198,7 +205,7 @@ const specialPrintDocs = [
 
     <section class="section branding-split-section branding-split-section--second">
       <div class="branding-case-grid branding-case-grid--reverse editorial-case-grid">
-        <div class="branding-case-preview reveal">
+        <div class="branding-case-preview reveal editorial-preview--desktop">
           <div class="editorial-pdf-preview">
             <PdfPreview
               id="editorial-planning-preview"
@@ -225,11 +232,15 @@ const specialPrintDocs = [
             revisited, and understood over time.
           </p>
 
-          <div class="editorial-doc-nav">
+          <div class="editorial-doc-nav editorial-doc-nav--desktop">
             <PdfPreviewThumbs
               targetId="editorial-planning-preview"
               documents={planningDocs}
             />
+          </div>
+
+          <div class="editorial-doc-list editorial-doc-list--mobile">
+            <PdfDocumentList documents={planningDocs} />
           </div>
         </div>
       </div>
@@ -254,15 +265,19 @@ const specialPrintDocs = [
             range of formats.
           </p>
 
-          <div class="editorial-doc-nav">
+          <div class="editorial-doc-nav editorial-doc-nav--desktop">
             <PdfPreviewThumbs
               targetId="editorial-special-print-preview"
               documents={specialPrintDocs}
             />
           </div>
+
+          <div class="editorial-doc-list editorial-doc-list--mobile">
+            <PdfDocumentList documents={specialPrintDocs} />
+          </div>
         </div>
 
-        <div class="branding-case-preview reveal">
+        <div class="branding-case-preview reveal editorial-preview--desktop">
           <div class="editorial-pdf-preview">
             <PdfPreview
               id="editorial-special-print-preview"

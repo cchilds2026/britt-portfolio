@@ -422,3 +422,17 @@
     inset: 0.65rem;
   }
 }
+
+.pdf-preview__mobile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.pdf-preview__thumbs.editorial-doc-thumbs__grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.pdf-preview__thumb--mobile {
+  min-height: 48px;
+}
