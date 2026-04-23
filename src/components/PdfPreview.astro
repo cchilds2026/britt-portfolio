@@ -10,31 +10,49 @@ const serializedDocuments = JSON.stringify(documents);
   data-preview-id={safeId}
   id={safeId}
 >
-  <button
-    type="button"
-    class="pdf-preview__trigger"
-    data-pdf-trigger
-    aria-haspopup="dialog"
-    aria-controls={`${safeId}-lightbox`}
-  >
-    <div class="pdf-preview__trigger-inner">
-      <canvas class="pdf-preview__trigger-canvas" data-pdf-main-canvas></canvas>
-      <div class="pdf-preview__overlay">
-        <span class="pdf-preview__overlay-label">Open document preview</span>
+  <div class="pdf-preview__desktop" data-pdf-desktop-view>
+    <button
+      type="button"
+      class="pdf-preview__trigger"
+      data-pdf-trigger
+      aria-haspopup="dialog"
+      aria-controls={`${safeId}-lightbox`}
+    >
+      <div class="pdf-preview__trigger-inner">
+        <canvas class="pdf-preview__trigger-canvas" data-pdf-main-canvas></canvas>
+        <div class="pdf-preview__overlay">
+          <span class="pdf-preview__overlay-label">Open document preview</span>
+        </div>
       </div>
+    </button>
+
+    <p class="pdf-preview__inline-caption meta" data-pdf-inline-caption></p>
+
+    {showThumbs && (
+      <div
+        class="pdf-preview__thumbs"
+        data-pdf-thumbs
+        role="tablist"
+        aria-label="Document previews"
+      ></div>
+    )}
+  </div>
+
+  <div class="pdf-preview__mobile" data-pdf-mobile-view hidden>
+    <div class="pdf-preview__mobile-card">
+      <div class="pdf-preview__mobile-label" data-pdf-mobile-label></div>
+      <p class="pdf-preview__mobile-caption meta" data-pdf-mobile-caption></p>
+      <a
+        class="pdf-preview__mobile-link"
+        data-pdf-mobile-link
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open PDF
+      </a>
     </div>
-  </button>
-
-  <p class="pdf-preview__inline-caption meta" data-pdf-inline-caption></p>
-
-  {showThumbs && (
-    <div
-      class="pdf-preview__thumbs"
-      data-pdf-thumbs
-      role="tablist"
-      aria-label="Document previews"
-    ></div>
-  )}
+  </div>
 
   <div
     class="pdf-lightbox"
@@ -99,12 +117,28 @@ const serializedDocuments = JSON.stringify(documents);
 </div>
 
 <script type="module">
-  import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
+  const MOBILE_MEDIA = "(max-width: 768px)";
+  let pdfjsPromise = null;
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+  function isMobileView() {
+    return window.matchMedia(MOBILE_MEDIA).matches;
+  }
+
+  async function getPdfJs() {
+    if (!pdfjsPromise) {
+      pdfjsPromise = import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs")
+        .then((pdfjsLib) => {
+          pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+          return pdfjsLib;
+        });
+    }
+
+    return pdfjsPromise;
+  }
 
   async function loadPdf(url) {
+    const pdfjsLib = await getPdfJs();
     const loadingTask = pdfjsLib.getDocument(url);
     return await loadingTask.promise;
   }
@@ -171,6 +205,12 @@ const serializedDocuments = JSON.stringify(documents);
 
     const previewId = root.dataset.previewId;
 
+    const desktopView = root.querySelector("[data-pdf-desktop-view]");
+    const mobileView = root.querySelector("[data-pdf-mobile-view]");
+    const mobileLabel = root.querySelector("[data-pdf-mobile-label]");
+    const mobileCaption = root.querySelector("[data-pdf-mobile-caption]");
+    const mobileLink = root.querySelector("[data-pdf-mobile-link]");
+
     const trigger = root.querySelector("[data-pdf-trigger]");
     const mainCanvas = root.querySelector("[data-pdf-main-canvas]");
     const inlineCaption = root.querySelector("[data-pdf-inline-caption]");
@@ -188,6 +228,17 @@ const serializedDocuments = JSON.stringify(documents);
     const state = ensurePdfState(root, documents);
     state.previewRoots.add(root);
 
+    function syncLayoutMode() {
+      const mobile = isMobileView();
+
+      if (desktopView) desktopView.hidden = mobile;
+      if (mobileView) mobileView.hidden = !mobile;
+
+      if (mobile && state.isLightboxOpen) {
+        closeLightbox();
+      }
+    }
+
     function updateThumbStates() {
       const thumbs = root.querySelectorAll(".pdf-preview__thumb");
       thumbs.forEach((thumb, index) => {
@@ -203,9 +254,23 @@ const serializedDocuments = JSON.stringify(documents);
       });
     }
 
+    function renderMobilePreview() {
+      const doc = documents[state.activeDocIndex];
+      if (!doc) return;
+
+      if (mobileLabel) mobileLabel.textContent = doc.label || "Open document";
+      if (mobileCaption) mobileCaption.textContent = doc.caption || "";
+      if (mobileLink) mobileLink.href = doc.src;
+    }
+
     async function renderMainPreview() {
       const doc = documents[state.activeDocIndex];
       inlineCaption.textContent = doc?.caption || "";
+
+      if (isMobileView()) {
+        renderMobilePreview();
+        return;
+      }
 
       try {
         const pdf = await loadPdf(doc.src);
@@ -218,7 +283,7 @@ const serializedDocuments = JSON.stringify(documents);
     }
 
     async function renderLightboxPage() {
-      if (!state.activePdf) return;
+      if (!state.activePdf || isMobileView()) return;
 
       const wrap = lightboxCanvas.closest(".pdf-lightbox__canvas-wrap");
       const availableWidth = Math.max(300, wrap.clientWidth - 32);
@@ -242,12 +307,18 @@ const serializedDocuments = JSON.stringify(documents);
     async function setActiveDocument(index, preserveLightbox = false) {
       state.activeDocIndex = index;
       state.activePage = 1;
-      state.activePdf = await loadPdf(documents[state.activeDocIndex].src);
+      state.activePdf = null;
+
+      renderMobilePreview();
+
+      if (!isMobileView()) {
+        state.activePdf = await loadPdf(documents[state.activeDocIndex].src);
+      }
 
       await renderMainPreview();
       updateDocTabStates();
 
-      if (preserveLightbox || state.isLightboxOpen) {
+      if (!isMobileView() && (preserveLightbox || state.isLightboxOpen)) {
         await renderLightboxPage();
       }
     }
@@ -272,7 +343,7 @@ const serializedDocuments = JSON.stringify(documents);
     }
 
     async function renderThumb(doc, index) {
-      if (!thumbsWrap) return;
+      if (!thumbsWrap || isMobileView()) return;
 
       const thumbBtn = document.createElement("button");
       thumbBtn.type = "button";
@@ -307,6 +378,8 @@ const serializedDocuments = JSON.stringify(documents);
     }
 
     async function openLightbox() {
+      if (isMobileView()) return;
+
       state.isLightboxOpen = true;
       lightbox.hidden = false;
       lightbox.classList.add("is-open");
@@ -370,14 +443,22 @@ const serializedDocuments = JSON.stringify(documents);
     });
 
     window.addEventListener("resize", async () => {
+      syncLayoutMode();
+
+      if (isMobileView()) return;
+
       if (state.isLightboxOpen) {
         await renderLightboxPage();
+      } else {
+        await renderMainPreview();
       }
     });
 
+    syncLayoutMode();
     renderDocTabs();
 
-    if (thumbsWrap) {
+    if (thumbsWrap && !isMobileView()) {
+      thumbsWrap.innerHTML = "";
       documents.forEach((doc, index) => {
         renderThumb(doc, index);
       });

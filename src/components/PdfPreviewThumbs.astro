@@ -19,12 +19,28 @@ const serializedDocuments = JSON.stringify(documents);
 </div>
 
 <script type="module">
-  import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs";
+  const MOBILE_MEDIA = "(max-width: 768px)";
+  let pdfjsPromise = null;
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+  function isMobileView() {
+    return window.matchMedia(MOBILE_MEDIA).matches;
+  }
+
+  async function getPdfJs() {
+    if (!pdfjsPromise) {
+      pdfjsPromise = import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs")
+        .then((pdfjsLib) => {
+          pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
+          return pdfjsLib;
+        });
+    }
+
+    return pdfjsPromise;
+  }
 
   async function loadPdf(url) {
+    const pdfjsLib = await getPdfJs();
     const loadingTask = pdfjsLib.getDocument(url);
     return await loadingTask.promise;
   }
@@ -77,7 +93,7 @@ const serializedDocuments = JSON.stringify(documents);
       });
     }
 
-    async function renderThumb(doc, index) {
+    async function renderDesktopThumb(doc, index) {
       const thumbBtn = document.createElement("button");
       thumbBtn.type = "button";
       thumbBtn.className = "pdf-preview__thumb";
@@ -109,14 +125,54 @@ const serializedDocuments = JSON.stringify(documents);
       }
     }
 
-    documents.forEach((doc, index) => {
-      renderThumb(doc, index);
-    });
+    function renderMobileButton(doc, index) {
+      const thumbBtn = document.createElement("button");
+      thumbBtn.type = "button";
+      thumbBtn.className = "pdf-preview__thumb pdf-preview__thumb--mobile";
+      if (index === 0) thumbBtn.classList.add("is-active");
+      thumbBtn.setAttribute("role", "tab");
+      thumbBtn.setAttribute("aria-selected", index === 0 ? "true" : "false");
+      thumbBtn.textContent = doc.label;
+
+      thumbBtn.addEventListener("click", () => {
+        updateActive(index);
+        document.dispatchEvent(
+          new CustomEvent("pdf-preview:set-document", {
+            detail: { previewId: targetId, index }
+          })
+        );
+      });
+
+      buttonsWrap.appendChild(thumbBtn);
+    }
+
+    function renderAll() {
+      buttonsWrap.innerHTML = "";
+
+      if (isMobileView()) {
+        documents.forEach((doc, index) => renderMobileButton(doc, index));
+      } else {
+        documents.forEach((doc, index) => {
+          renderDesktopThumb(doc, index);
+        });
+      }
+    }
+
+    renderAll();
 
     document.addEventListener("pdf-preview:set-document", (event) => {
       const { previewId, index } = event.detail || {};
       if (previewId !== targetId) return;
       updateActive(index);
+    });
+
+    window.addEventListener("resize", () => {
+      const currentActive =
+        Array.from(root.querySelectorAll(".pdf-preview__thumb"))
+          .findIndex((el) => el.classList.contains("is-active")) || 0;
+
+      renderAll();
+      updateActive(currentActive < 0 ? 0 : currentActive);
     });
   }
 
