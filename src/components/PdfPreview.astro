@@ -317,9 +317,17 @@ const serializedDocuments = JSON.stringify(documents);
       );
     }
 
-    trigger?.addEventListener("click", () => {
-      openLightbox();
-    });
+      trigger?.addEventListener("click", () => {
+        openLightbox();
+      });
+
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          closeLightbox();
+        });
+      });
 
     prevBtn?.addEventListener("click", async () => {
       if (!activePdf || activePage <= 1) return;
